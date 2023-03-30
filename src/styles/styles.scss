@@ -20,6 +20,7 @@ $cancel-btn: #ebef0a;
   padding: 15px 20px;
   transition: 0.2s ease-in-out;
   margin-bottom: 10px;
+  font-size: 1.1rem;
 
   &:last-of-type {
     margin-bottom: 0;
@@ -82,7 +83,7 @@ a {
 
 #sidebar {
   grid-area: 1 / 1 / 3 / 2;
-  min-width: 375px;
+  min-width: 400px;
   max-width: 700px;
   padding: 30px;
 
@@ -157,6 +158,10 @@ a {
       border-radius: 5px;
       border: 1px solid #cecece;
 
+      &::placeholder {
+        opacity: 0.5;
+      }
+
       &:focus {
         outline: none;
         border: 1px solid #959595;
@@ -201,8 +206,8 @@ a {
     }
   }
 
-  .project-tasks {
-    transition: 0.2s ease-in-out;
+  .project-task {
+    @include sidebar-bg;
   }
 }
 
