@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
+// Variables
+$base-color: #2e46bb;
+
+// Mixins
+@mixin sidebar-title {
+  padding: 12px 0;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 20px;
+}
+
+@mixin sidebar-item {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 12px 20px;
+  transition: 0.2s ease-in-out;
+  margin-bottom: 10px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &.active {
+    background-color: $base-color;
+    color: #fff;
+  }
+
+  &:hover {
+    cursor: pointer;
+    &:not(.active) {
+      background-color: darken(#fff, 4%);
+    }
+  }
+}
+
+// Universal styles
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  box-sizing: inherit;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: auto 4fr;
+  grid-template-rows: auto 1fr;
+  gap: 20px;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #eee;
+}
+
+#header,
+#sidebar,
+#content {
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+#header {
+  grid-area: 1 / 2 / 2 / 3;
+  display: flex;
+  justify-content: end;
+}
+
+#sidebar {
+  grid-area: 1 / 1 / 3 / 2;
+  min-width: 350px;
+  max-width: 700px;
+  padding: 30px;
+
+  .default-tasks,
+  .project-tasks h2 {
+    font-size: 1.1rem;
+  }
+
+  .default-tasks {
+    margin-bottom: 50px;
+
+    .default-tasks-title {
+      font-size: 1.4rem;
+      @include sidebar-title;
+    }
+
+    .default-task {
+      @include sidebar-item;
+    }
+  }
+
+  .projects-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include sidebar-title;
+
+    span:first-child {
+      font-size: 1.4rem;
+    }
+  }
+
+  .add-project-icon {
+    background-color: $base-color;
+    color: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      background-color: darken($base-color, 10%);
+      transform: rotate(90deg);
+    }
+  }
+}
+
+#content {
+  grid-area: 2 / 2 / 3 / 3;
+}

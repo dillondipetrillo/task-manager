@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header id="header">
+        <div class="logo">TASK</div>
+      </header>
+      <section id="sidebar">
+        <div class="default-tasks">
+          <h2 class="default-tasks-title">Home</h2>
+          <div class="default-task active" data-task="all">All Tasks</div>
+          <div class="default-task" data-task="all">Today</div>
+          <div class="default-task" data-task="all">Week</div>
+        </div>
+        <div class="project-tasks">
+          <h2 class="projects-title">
+            <span>Projects</span>
+            <span class="add-project-icon">
+              <i class="fa-solid fa-plus"></i>
+            </span>
+          </h2>
+        </div>
+      </section>
+      <section id="content">Main Section</section>
+    </div>
+  </body>
+</html>
