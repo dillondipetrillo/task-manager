@@ -2,18 +2,22 @@
 
 // Variables
 $base-color: #2e46bb;
+$white-color: #fff;
+$off-white: #ddd;
+$add-btn: #08a928;
+$cancel-btn: #ebef0a;
 
 // Mixins
 @mixin sidebar-title {
   padding: 12px 0;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid $off-white;
   margin-bottom: 20px;
 }
 
-@mixin sidebar-item {
-  background-color: #fff;
+@mixin sidebar-bg {
+  background-color: $white-color;
   border-radius: 8px;
-  padding: 12px 20px;
+  padding: 15px 20px;
   transition: 0.2s ease-in-out;
   margin-bottom: 10px;
 
@@ -23,13 +27,13 @@ $base-color: #2e46bb;
 
   &.active {
     background-color: $base-color;
-    color: #fff;
+    color: $white-color;
   }
 
   &:hover {
     cursor: pointer;
     &:not(.active) {
-      background-color: darken(#fff, 4%);
+      background-color: darken($white-color, 4%);
     }
   }
 }
@@ -60,14 +64,14 @@ a {
   gap: 20px;
   min-height: 100vh;
   padding: 20px;
-  background-color: #eee;
+  background-color: darken($white-color, 5%);
 }
 
 #header,
 #sidebar,
 #content {
   border-radius: 10px;
-  background-color: #fff;
+  background-color: $white-color;
 }
 
 #header {
@@ -78,7 +82,7 @@ a {
 
 #sidebar {
   grid-area: 1 / 1 / 3 / 2;
-  min-width: 350px;
+  min-width: 375px;
   max-width: 700px;
   padding: 30px;
 
@@ -96,7 +100,7 @@ a {
     }
 
     .default-task {
-      @include sidebar-item;
+      @include sidebar-bg;
     }
   }
 
@@ -113,10 +117,10 @@ a {
 
   .add-project-icon {
     background-color: $base-color;
-    color: #fff;
+    color: $white-color;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -125,8 +129,80 @@ a {
     &:hover {
       cursor: pointer;
       background-color: darken($base-color, 10%);
-      transform: rotate(90deg);
     }
+
+    &.open {
+      transform: rotate(135deg);
+    }
+  }
+
+  .add-project-form {
+    transform: scaleY(0);
+    height: 0;
+    transform-origin: top;
+    overflow: hidden;
+
+    &.open {
+      transform: scaleY(1);
+      margin-bottom: 10px;
+      height: auto;
+    }
+
+    input {
+      width: 100%;
+      border: none;
+      padding: 10px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #cecece;
+
+      &:focus {
+        outline: none;
+        border: 1px solid #959595;
+      }
+    }
+
+    .add-project-btns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+
+      button {
+        border: none;
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 5px;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &.add {
+          background-color: $add-btn;
+          color: $white-color;
+          border: 1px solid $add-btn;
+
+          &:hover {
+            background-color: darken($add-btn, 4%);
+          }
+        }
+
+        &.cancel {
+          background-color: $cancel-btn;
+          border: 1px solid $cancel-btn;
+
+          &:hover {
+            background-color: darken($cancel-btn, 4%);
+          }
+        }
+      }
+    }
+  }
+
+  .project-tasks {
+    transition: 0.2s ease-in-out;
   }
 }
 
