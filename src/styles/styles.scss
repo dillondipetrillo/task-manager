@@ -5,7 +5,7 @@ $base-color: #2e46bb;
 $white-color: #fff;
 $off-white: #ddd;
 $add-btn: #08a928;
-$cancel-btn: #ebef0a;
+$cancel-btn: #f0f40a;
 
 // Mixins
 @mixin sidebar-title {
@@ -36,6 +36,42 @@ $cancel-btn: #ebef0a;
     &:not(.active) {
       background-color: darken($white-color, 4%);
     }
+  }
+}
+
+@mixin icon-bg {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease-in-out;
+}
+
+@mixin flex-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin sidebar-modal {
+  position: absolute;
+  opacity: 0;
+  z-index: 2;
+  transform: translateY(10px);
+  overflow: hidden;
+  background-color: lighten($off-white, 5%);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  transition: opacity 100ms ease-in-out, transform 100ms ease-in-out;
+  pointer-events: none;
+
+  &.open {
+    transform: translateY(0);
+    opacity: 1;
+    z-index: 3;
+    pointer-events: auto;
   }
 }
 
@@ -105,10 +141,12 @@ a {
     }
   }
 
+  .project-tasks {
+    position: relative;
+  }
+
   .projects-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex-space-between;
     @include sidebar-title;
 
     span:first-child {
@@ -119,13 +157,7 @@ a {
   .add-project-icon {
     background-color: $base-color;
     color: $white-color;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.2s ease-in-out;
+    @include icon-bg;
 
     &:hover {
       cursor: pointer;
@@ -138,16 +170,11 @@ a {
   }
 
   .add-project-form {
-    transform: scaleY(0);
-    height: 0;
-    transform-origin: top;
-    overflow: hidden;
-
-    &.open {
-      transform: scaleY(1);
-      margin-bottom: 10px;
-      height: auto;
-    }
+    top: -55%;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    @include sidebar-modal;
 
     input {
       width: 100%;
@@ -156,15 +183,13 @@ a {
       font-size: 1rem;
       margin-bottom: 15px;
       border-radius: 5px;
-      border: 1px solid #cecece;
 
       &::placeholder {
         opacity: 0.5;
       }
 
       &:focus {
-        outline: none;
-        border: 1px solid #959595;
+        outline: 1px solid #959595;
       }
     }
 
@@ -196,10 +221,10 @@ a {
 
         &.cancel {
           background-color: $cancel-btn;
-          border: 1px solid $cancel-btn;
+          border: 1px solid darken($cancel-btn, 7%);
 
           &:hover {
-            background-color: darken($cancel-btn, 4%);
+            background-color: darken($cancel-btn, 2%);
           }
         }
       }
@@ -208,6 +233,34 @@ a {
 
   .project-task {
     @include sidebar-bg;
+    @include flex-space-between;
+    position: relative;
+
+    &:has(> .project-edit-delete.open) {
+      background-color: darken($white-color, 4%);
+    }
+
+    .project-edit-icon {
+      @include icon-bg;
+    }
+
+    .project-edit-delete {
+      @include sidebar-modal;
+      display: flex;
+      flex-direction: column;
+      top: -120%;
+      right: 15px;
+      width: auto;
+
+      span {
+        padding: 10px 25px 10px 15px;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+          background-color: darken($off-white, 2%);
+        }
+      }
+    }
   }
 }
 
