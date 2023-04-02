@@ -100,21 +100,43 @@ a {
   grid-template-rows: auto 1fr;
   gap: 20px;
   min-height: 100vh;
-  padding: 20px;
+  max-height: 100vh;
+  padding: 30px;
   background-color: darken($white-color, 5%);
 }
 
-#header,
 #sidebar,
 #content {
   border-radius: 10px;
   background-color: $white-color;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #header {
   grid-area: 1 / 2 / 2 / 3;
   display: flex;
   justify-content: end;
+
+  .logo {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}
+
+.edit-delete {
+  @include sidebar-modal;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+
+  span {
+    padding: 10px 25px 10px 15px;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken($off-white, 2%);
+    }
+  }
 }
 
 #sidebar {
@@ -122,6 +144,7 @@ a {
   min-width: 400px;
   max-width: 700px;
   padding: 30px;
+  overflow-y: scroll;
 
   .default-tasks,
   .project-tasks h2 {
@@ -141,17 +164,18 @@ a {
     }
   }
 
-  .project-tasks {
-    position: relative;
-  }
-
   .projects-title {
     @include flex-space-between;
     @include sidebar-title;
+    position: relative;
 
     span:first-child {
       font-size: 1.4rem;
     }
+  }
+
+  .project-tasks-wrapper {
+    position: relative;
   }
 
   .add-project-icon {
@@ -170,7 +194,7 @@ a {
   }
 
   .add-project-form {
-    top: -55%;
+    top: -120px;
     left: 0;
     width: 100%;
     padding: 10px;
@@ -231,33 +255,32 @@ a {
     }
   }
 
-  .project-task {
-    @include sidebar-bg;
-    @include flex-space-between;
+  .project-tasks {
     position: relative;
 
-    &:has(> .project-edit-delete.open) {
-      background-color: darken($white-color, 4%);
-    }
+    .project-task {
+      @include sidebar-bg;
+      @include flex-space-between;
+      position: relative;
 
-    .project-edit-icon {
-      @include icon-bg;
-    }
+      .edit-delete {
+        top: -120%;
+        right: 15px;
+      }
 
-    .project-edit-delete {
-      @include sidebar-modal;
-      display: flex;
-      flex-direction: column;
-      top: -120%;
-      right: 15px;
-      width: auto;
+      &:has(> .edit-delete.open) {
+        background-color: darken($white-color, 4%);
+      }
 
-      span {
-        padding: 10px 25px 10px 15px;
-        transition: 0.2s ease-in-out;
+      .project-edit-icon {
+        @include icon-bg;
 
-        &:hover {
-          background-color: darken($off-white, 2%);
+        & i {
+          opacity: 0.7;
+        }
+
+        &:hover i {
+          opacity: 1;
         }
       }
     }
@@ -266,4 +289,169 @@ a {
 
 #content {
   grid-area: 2 / 2 / 3 / 3;
+  margin: 20px 0 0 20px;
+  position: relative;
+  overflow: hidden;
+
+  .content-wrapper {
+    padding: 30px;
+    padding-top: 0;
+    position: absolute;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+  }
+
+  .content-top-section {
+    @include flex-space-between;
+    padding: 30px 0;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.89);
+    backdrop-filter: blur(5px);
+    z-index: 3;
+
+    .content-add-task {
+      background-color: $base-color;
+      width: 60px;
+      height: 60px;
+      @include flex-space-between;
+      justify-content: center;
+      font-size: 1.5rem;
+      border-radius: 100%;
+      color: $white-color;
+      // transition: 0.2s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        background-color: darken($base-color, 4%);
+      }
+
+      &:active {
+        transform: scale(0.97);
+        // transform: rotate(90deg);
+      }
+    }
+  }
+
+  .content-tasks {
+    position: relative;
+  }
+
+  .content-task {
+    border: 1px solid #d3d3d3;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .content-task-container,
+  .content-task-container-left,
+  .content-task-container-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .content-task-container-left {
+    margin-right: auto;
+
+    .check-complete {
+      width: 20px;
+      height: 20px;
+      border-radius: 100%;
+      border: 2px solid #333;
+      margin-right: 20px;
+
+      &.checked {
+        background-color: $base-color;
+      }
+
+      &.checked + .content-task-title {
+        text-decoration: line-through;
+        opacity: 0.5;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      &:hover {
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .content-task-title {
+      font-size: 1.2rem;
+      margin-right: 20px;
+    }
+
+    .content-task-priority {
+      background-color: $cancel-btn;
+      border: 1px solid darken($cancel-btn, 7%);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+  }
+
+  .content-task-container-right {
+    position: relative;
+
+    .content-task-date {
+      opacity: 0.7;
+    }
+
+    .content-task-open,
+    .content-task-edit {
+      @include icon-bg;
+      opacity: 0.5;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 1;
+      }
+    }
+
+    .content-task-open {
+      margin: 0 20px;
+
+      &.open {
+        transform: rotate(-180deg);
+      }
+    }
+
+    .edit-delete {
+      right: 0;
+      top: -300%;
+
+      & span:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .content-task-notes {
+    max-height: 0;
+    overflow: hidden;
+
+    &.open {
+      max-height: 1000px;
+    }
+
+    p {
+      padding-top: 15px;
+      margin-top: 15px;
+      border-top: 2px solid #ddd;
+      opacity: 0.7;
+      line-height: 1.5;
+    }
+  }
 }

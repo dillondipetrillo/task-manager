@@ -14,9 +14,10 @@
     />
   </head>
   <body>
+    <div class="add-task-form-modal-bg"></div>
     <div class="container">
       <header id="header">
-        <div class="logo">TASK</div>
+        <div class="logo">//TaskApp</div>
       </header>
       <section id="sidebar">
         <div class="default-tasks">
@@ -25,33 +26,33 @@
           <div class="default-task" data-task="all">Today</div>
           <div class="default-task" data-task="all">Week</div>
         </div>
-        <div class="project-tasks">
+        <div class="project-tasks-wrapper">
           <h2 class="projects-title">
             <span>Projects</span>
             <span class="add-project-icon">
               <i class="fa-solid fa-plus"></i>
             </span>
+            <form action="" class="add-project-form">
+              <input
+                type="text"
+                name="project-name"
+                id="project-name"
+                placeholder="Project name"
+                required
+              />
+              <div class="add-project-btns">
+                <button type="button" class="add">Create</button>
+                <button type="button" class="cancel">Cancel</button>
+              </div>
+            </form>
           </h2>
-          <form action="" class="add-project-form">
-            <input
-              type="text"
-              name="project-name"
-              id="project-name"
-              placeholder="Project name"
-              required
-            />
-            <div class="add-project-btns">
-              <button type="button" class="add">Create</button>
-              <button type="button" class="cancel">Cancel</button>
-            </div>
-          </form>
           <div class="project-tasks">
             <div class="project-task">
               Project One
               <span class="project-edit-icon">
                 <i class="fa-solid fa-ellipsis"></i>
               </span>
-              <div class="project-edit-delete">
+              <div class="edit-delete">
                 <span>Edit</span>
                 <span>Delete</span>
               </div>
@@ -61,7 +62,7 @@
               <span class="project-edit-icon">
                 <i class="fa-solid fa-ellipsis"></i>
               </span>
-              <div class="project-edit-delete">
+              <div class="edit-delete">
                 <span>Edit</span>
                 <span>Delete</span>
               </div>
@@ -69,7 +70,78 @@
           </div>
         </div>
       </section>
-      <section id="content">Main Section</section>
+      <section id="content">
+        <form action="" class="add-task-form-modal"></form>
+        <div class="content-wrapper">
+          <div class="content-top-section">
+            <h1 class="content-project-title">All Tasks</h1>
+            <div class="content-add-task">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+          </div>
+          <div class="content-tasks">
+            <div class="content-task">
+              <div class="content-task-container">
+                <div class="content-task-container-left">
+                  <div class="check-complete"></div>
+                  <span class="content-task-title">Task One Test</span>
+                  <span class="content-task-priority">Medium</span>
+                </div>
+                <div class="content-task-container-right">
+                  <span class="content-task-date">04/11/1996</span>
+                  <div class="content-task-open">
+                    <i class="fa-solid fa-chevron-down"></i>
+                  </div>
+                  <div class="content-task-edit">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                  </div>
+                  <div class="edit-delete">
+                    <span>Edit</span>
+                    <span>Delete</span>
+                  </div>
+                </div>
+              </div>
+              <div class="content-task-notes">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
+                  excepturi quo eius ex modi a non repellat quam nisi. Quas
+                  vero, commodi dolor cumque eius fugiat consequuntur!
+                  Accusamus, similique delectus?
+                </p>
+              </div>
+            </div>
+            <div class="content-task">
+              <div class="content-task-container">
+                <div class="content-task-container-left">
+                  <div class="check-complete"></div>
+                  <span class="content-task-title">Task One Test</span>
+                </div>
+                <div class="content-task-container-right">
+                  <span class="content-task-date">04/11/1996</span>
+                  <div class="content-task-open">
+                    <i class="fa-solid fa-chevron-down"></i>
+                  </div>
+                  <div class="content-task-edit">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                  </div>
+                  <div class="edit-delete">
+                    <span>Edit</span>
+                    <span>Delete</span>
+                  </div>
+                </div>
+              </div>
+              <div class="content-task-notes">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
+                  excepturi quo eius ex modi a non repellat quam nisi. Quas
+                  vero, commodi dolor cumque eius fugiat consequuntur!
+                  Accusamus, similique delectus?
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </body>
 </html>
