@@ -110,13 +110,33 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 
 /***/ }),
 
+/***/ "./src/addProject.js":
+/*!***************************!*\
+  !*** ./src/addProject.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addProject\": () => (/* binding */ addProject)\n/* harmony export */ });\n/* harmony import */ var _toggleOpenClass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toggleOpenClass */ \"./src/toggleOpenClass.js\");\n\n\nconst addProject = () => {\n  //cache DOM elements\n  const addProjectBtn = document.querySelector(\".add-project-icon\");\n  const addProjectForm = document.querySelector(\".add-project-form\");\n  const addProjectCancelBtn = document.querySelector(\n    \".add-project-btns button.cancel\"\n  );\n\n  // open or close form modal with icon\n  addProjectBtn.addEventListener(\"click\", () => {\n    (0,_toggleOpenClass__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(addProjectForm, addProjectBtn);\n  });\n\n  // close form modal with cancel button\n  addProjectCancelBtn.addEventListener(\"click\", () => {\n    (0,_toggleOpenClass__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(addProjectForm, addProjectBtn);\n  });\n};\n\n\n//# sourceURL=webpack://task-manager/./src/addProject.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/styles.scss */ \"./src/styles/styles.scss\");\n\n\nconst addProjectIcon = document.querySelector(\".add-project-icon\");\nconst addProjectForm = document.querySelector(\".add-project-form\");\nconst addProjectCancelBtn = document.querySelector(\"button.cancel\");\nconst projectEditIcon = document.querySelector(\".project-edit-icon\");\nconst projectEditDelete = document.querySelector(\".edit-delete\");\nconst taskDescript = document.querySelector(\".content-task-notes\");\nconst taskOpenIcon = document.querySelector(\".content-task-open\");\nconst taskEditIcon = document.querySelector(\".content-task-edit\");\nconst taskEditModal = document.querySelector(\n  \".content-task-container-right .edit-delete\"\n);\nconst checkedIcon = document.querySelector(\".check-complete\");\n\ncheckedIcon.addEventListener(\"click\", function () {\n  if (checkedIcon.classList.contains(\"checked\")) {\n    checkedIcon.classList.remove(\"checked\");\n  } else {\n    checkedIcon.classList.add(\"checked\");\n  }\n});\n\ntaskEditIcon.addEventListener(\"click\", function () {\n  if (taskEditModal.classList.contains(\"open\")) {\n    taskEditModal.classList.remove(\"open\");\n  } else {\n    taskEditModal.classList.add(\"open\");\n  }\n});\n\naddProjectIcon.addEventListener(\"click\", function () {\n  if (addProjectIcon.classList.contains(\"open\")) {\n    addProjectIcon.classList.remove(\"open\");\n    addProjectForm.classList.remove(\"open\");\n  } else {\n    addProjectIcon.classList.add(\"open\");\n    addProjectForm.classList.add(\"open\");\n  }\n});\n\naddProjectCancelBtn.addEventListener(\"click\", function () {\n  addProjectIcon.classList.remove(\"open\");\n  addProjectForm.classList.remove(\"open\");\n});\n\nprojectEditIcon.addEventListener(\"click\", function () {\n  if (projectEditDelete.classList.contains(\"open\")) {\n    projectEditDelete.classList.remove(\"open\");\n  } else {\n    projectEditDelete.classList.add(\"open\");\n  }\n});\n\ntaskOpenIcon.addEventListener(\"click\", function () {\n  if (\n    taskOpenIcon.classList.contains(\"open\") &&\n    taskDescript.classList.contains(\"open\")\n  ) {\n    taskOpenIcon.classList.remove(\"open\");\n    taskDescript.classList.remove(\"open\");\n  } else {\n    taskDescript.classList.add(\"open\");\n    taskOpenIcon.classList.add(\"open\");\n  }\n});\n\n\n//# sourceURL=webpack://task-manager/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _addProject__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addProject */ \"./src/addProject.js\");\n/* harmony import */ var _styles_styles_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/styles.scss */ \"./src/styles/styles.scss\");\n\n\n\n(0,_addProject__WEBPACK_IMPORTED_MODULE_0__.addProject)();\n\n\n//# sourceURL=webpack://task-manager/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/toggleOpenClass.js":
+/*!********************************!*\
+  !*** ./src/toggleOpenClass.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst toggleOpenClass = (...domElements) => {\n  domElements.forEach((element) => {\n    if (element.classList.contains(\"open\")) {\n      element.classList.remove(\"open\");\n    } else {\n      element.classList.add(\"open\");\n    }\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (toggleOpenClass);\n\n\n//# sourceURL=webpack://task-manager/./src/toggleOpenClass.js?");
 
 /***/ })
 
