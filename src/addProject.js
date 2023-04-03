@@ -12,8 +12,26 @@ export const addProject = () => {
     ".add-project-btns button.add"
   );
   const addProjectError = document.querySelector(".project-error");
-  // cache parent DOM element
   const projectList = document.querySelector(".project-tasks");
+  const defaultTasks = document.querySelectorAll(".default-task");
+
+  defaultTasks.forEach((defaultTask) => {
+    defaultTask.addEventListener("click", () => {
+      if (defaultTask.classList.contains("active")) return;
+      if (!defaultTask.classList.contains("active")) {
+        let oldActive = document.getElementsByClassName("active")[0];
+        if (oldActive) {
+          oldActive.classList.remove("active");
+        }
+        defaultTask.classList.add("active");
+      }
+    });
+  });
+
+  // prevent default form submit
+  addProjectForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+  });
 
   // opens/closes add project form
   document.addEventListener("click", (e) => {
@@ -68,11 +86,22 @@ export const addProject = () => {
     editPopUp.classList.add("edit-delete");
     const editSpan = document.createElement("span");
     const deleteSpan = document.createElement("span");
+    const editProjectNameDiv = document.createElement("div");
+    editProjectNameDiv.classList.add("edit-project-name");
+    const editProjectInput = document.createElement("input");
+    editProjectInput.setAttribute("type", "text");
+    const editProjectSubmit = document.createElement("button");
+    editProjectSubmit.classList.add("edit-project-submit");
+    const editProjectNameErr = document.createElement("span");
+    editProjectNameErr.classList.add("edit-project-error");
 
     // add content to DOM elements
     projectName.textContent = project;
     editSpan.textContent = "Edit";
     deleteSpan.textContent = "Delete";
+    editProjectSubmit.textContent = "Update";
+    editProjectNameErr.textContent =
+      "Project name must be one or more characters";
 
     // add evenetlisteners
     document.addEventListener("click", (e) => {
@@ -84,37 +113,105 @@ export const addProject = () => {
       } else if (projectEditIcon.contains(e.target)) {
         toggleOpenClass(editPopUp);
       } else if (editSpan.contains(e.target)) {
-        editProjectName(projectName);
+        const editPayload = {
+          editProjectNameDiv,
+          editProjectInput,
+          editProjectSubmit,
+          editProjectNameErr,
+        };
+        editProjectName(projectName, editPayload);
+        toggleOpenClass(editPopUp);
+      } else if (
+        !editProjectNameDiv.contains(e.target) &&
+        editProjectNameDiv.classList.contains("open")
+      ) {
+        toggleOpenClass(editProjectNameDiv);
+        editProjectNameErr.classList.remove("open");
+      } else if (deleteSpan.contains(e.target)) {
+        deleteProject(projectName.textContent);
+      } else if (projectTask.contains(e.target)) {
+        let oldActive = document.getElementsByClassName("active")[0];
+        if (oldActive) {
+          oldActive.classList.remove("active");
+        }
+        projectTask.classList.add("active");
       }
     });
 
     // append DOM elements in order
+    editProjectNameDiv.appendChild(editProjectInput);
+    editProjectNameDiv.appendChild(editProjectSubmit);
+    editProjectNameDiv.appendChild(editProjectNameErr);
     editPopUp.appendChild(editSpan);
     editPopUp.appendChild(deleteSpan);
     projectEditIcon.appendChild(dotIcon);
     projectTask.appendChild(projectName);
     projectTask.appendChild(projectEditIcon);
     projectTask.appendChild(editPopUp);
+    projectTask.appendChild(editProjectNameDiv);
     projectList.appendChild(projectTask);
   };
 
   const addProjectToLocalStorage = (inputVal) => {
-    if (projects.indexOf(inputVal) >= 0) {
+    let savedProjects = getLocalStorageProjects();
+
+    if (savedProjects.indexOf(inputVal) >= 0) {
       alert("Project already exists");
       return;
     }
 
-    projects.push(inputVal);
-    localStorage.setItem("projects", JSON.stringify(projects));
+    savedProjects.push(inputVal);
+    localStorage.setItem("projects", JSON.stringify(savedProjects));
 
     renderProjects();
   };
 
   // edit name of project
-  const editProjectName = (target) => {
+  const editProjectName = (target, editPayload) => {
+    let isActive = false;
+    if (target.classList.contains("active")) {
+      isActive = true;
+    }
+    const {
+      editProjectNameDiv,
+      editProjectInput,
+      editProjectSubmit,
+      editProjectNameErr,
+    } = editPayload;
+    editProjectNameDiv.classList.add("open");
+    editProjectInput.value = target.textContent;
+    editProjectInput.focus();
+    editProjectInput.addEventListener("input", () => {
+      if (editProjectNameErr.classList.contains("open")) {
+        editProjectNameErr.classList.remove("open");
+      }
+    });
+    editProjectSubmit.addEventListener("click", () => {
+      if (editProjectInput.value === "") {
+        editProjectNameErr.classList.add("open");
+        return;
+      } else {
+        const savedProjects = getLocalStorageProjects();
+        const changeIndex = savedProjects.findIndex(
+          (project) => project === target.textContent
+        );
+        savedProjects[changeIndex] = editProjectInput.value;
+        localStorage.setItem("projects", JSON.stringify(savedProjects));
+        renderProjects();
+        editProjectNameDiv.classList.remove("open");
+        isActive ? target.classList.add("active") : null;
+      }
+    });
+  };
+
+  // delete project
+  const deleteProject = (target) => {
     const savedProjects = getLocalStorageProjects();
-    console.log(savedProjects);
-    console.log(target);
+    let filteredProjects = savedProjects.filter((project) => {
+      if (project !== target) return true;
+    });
+    localStorage.setItem("projects", JSON.stringify(filteredProjects));
+    renderProjects();
   };
 
   const renderProjects = () => {
