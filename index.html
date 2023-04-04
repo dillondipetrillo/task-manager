@@ -14,118 +14,41 @@
     />
   </head>
   <body>
-    <div class="add-task-form-bg no-display">
-      <form action="" class="add-task-form-modal">
-        <div class="close-icon">
-          <i class="fa-solid fa-xmark"></i>
-        </div>
-        <div class="form-row">
-          <label for="task-title">Title</label>
-          <input type="text" name="task-title" id="task-title" required />
-        </div>
-        <div class="form-row">
-          <label for="priority">Priority</label>
-          <select name="priority" id="priority">
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="due-date">Due Date</label>
-          <input type="date" id="due-date" name="due-date" />
-        </div>
-        <div class="form-row">
-          <label for="notes">Notes</label>
-          <textarea name="notes" id="notes" rows="5"></textarea>
-        </div>
-        <button type="submit" class="add-task">Add Task</button>
-      </form>
-    </div>
-    <div class="container">
-      <div class="container-wrapper">
-        <header id="header">
-          <div class="logo">//TaskApp</div>
-        </header>
-        <section id="sidebar">
-          <div class="default-tasks">
-            <h2 class="default-tasks-title">Home</h2>
-            <div class="default-task active" data-task="all">All Tasks</div>
-            <div class="default-task" data-task="all">Today</div>
-            <div class="default-task" data-task="all">Week</div>
-          </div>
-          <div class="project-tasks-wrapper">
-            <h2 class="projects-title">
-              <span>Projects</span>
-              <span class="add-project-icon">
-                <i class="fa-solid fa-plus"></i>
-              </span>
-              <form action="" class="add-project-form">
-                <div class="project-form-row">
-                  <input
-                    type="text"
-                    name="project-name"
-                    id="project-name"
-                    placeholder="Project name"
-                    minlength="1"
-                    required
-                  />
-                  <span class="project-error"
-                    >Project name cannot be empty</span
-                  >
-                </div>
-                <div class="add-project-btns">
-                  <button type="button" class="add">Create</button>
-                  <button type="button" class="cancel">Cancel</button>
-                </div>
-              </form>
-            </h2>
-            <div class="project-tasks"></div>
-          </div>
-        </section>
-        <section id="content">
-          <div class="content-wrapper">
-            <div class="content-top-section">
-              <h1 class="content-project-title">All Tasks</h1>
-              <div class="content-add-task">
-                <i class="fa-solid fa-plus"></i>
-              </div>
-            </div>
-            <div class="content-tasks">
-              <div class="content-task">
-                <div class="content-task-container">
-                  <div class="content-task-container-left">
-                    <div class="check-complete"></div>
-                    <span class="content-task-title">Task One Test</span>
-                    <span class="content-task-priority">Medium</span>
-                  </div>
-                  <div class="content-task-container-right">
-                    <span class="content-task-date">04/11/1996</span>
-                    <div class="content-task-open">
-                      <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="content-task-edit">
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </div>
-                    <div class="edit-delete">
-                      <span>Edit</span>
-                      <span>Delete</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="content-task-notes">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Nulla excepturi quo eius ex modi a non repellat quam nisi.
-                    Quas vero, commodi dolor cumque eius fugiat consequuntur!
-                    Accusamus, similique delectus?
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+    <header>
+      <div class="menu-icon-bg">
+        <i class="fa-solid fa-bars"></i>
       </div>
-    </div>
+      <div class="logo">TaskApp</div>
+    </header>
+    <main>
+      <section id="sidebar">
+        <form class="add-list-form" data-new-list-form>
+          <input
+            type="text"
+            name="new-list"
+            id="new-list"
+            data-new-list-input
+            placeholder="Enter List Title"
+            autocomplete="off"
+          />
+          <button class="add-list-btn">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </form>
+        <ul class="list-container" data-lists>
+          <!-- <li class="list-item active">
+            Go somewhere
+            <span class="delete-icon"><i class="fa-solid fa-xmark"></i></span>
+          </li>
+          <li class="list-item">
+            Do Something
+            <span class="delete-icon"><i class="fa-solid fa-xmark"></i></span>
+          </li> -->
+        </ul>
+      </section>
+      <section id="content">
+        <div class="add-task-container"></div>
+      </section>
+    </main>
   <script defer src="bundle.js"></script></body>
 </html>
