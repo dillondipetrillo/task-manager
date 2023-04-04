@@ -1,91 +1,33 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
 // Variables
-$base-color: #2e46bb;
-$white-color: #fff;
-$off-white: #ddd;
-$add-btn: #08a928;
-$cancel-btn: #f0f40a;
+$primary-dark: #1a1d21;
+$secondary-dark: #0b0a0d;
+$secondary-dark-min: #19171d;
+$border-gray: #303336;
+$hover-bg: #343338;
+$primary-light: #fdfdfd;
+$secondary-light: #cbcbcd;
+$hightlight: #0576b9;
+$header-height: 60px;
 
 // Mixins
-@mixin sidebar-title {
-  padding: 12px 0;
-  border-bottom: 2px solid $off-white;
-  margin-bottom: 20px;
-}
-
-@mixin form-error {
-  font-size: 0.9rem;
-  color: red;
-  font-weight: 400;
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  display: none;
-
-  &.open {
-    display: block;
-  }
-}
-
-@mixin sidebar-bg {
-  background-color: $white-color;
-  border-radius: 8px;
-  padding: 15px 20px;
-  transition: 0.2s ease-in-out;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-
-  &:last-of-type {
-    margin-bottom: 0;
-  }
-
-  &.active {
-    background-color: $base-color;
-    color: $white-color;
-  }
-
-  &:hover {
-    cursor: pointer;
-    &:not(.active) {
-      background-color: darken($white-color, 4%);
-    }
-  }
-}
-
-@mixin icon-bg {
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 @mixin flex-space-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-@mixin sidebar-modal {
-  position: absolute;
-  opacity: 0;
-  z-index: 2;
-  transform: translateY(10px);
-  overflow: hidden;
-  background-color: lighten($off-white, 5%);
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-  transition: opacity 100ms ease-in-out, transform 100ms ease-in-out;
-  pointer-events: none;
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  &.open {
-    transform: translateY(0);
-    opacity: 1;
-    z-index: 3;
-    pointer-events: auto;
-  }
+@mixin header {
+  @include flex-space-between;
+  background-color: $secondary-dark;
+  border-bottom: 1px solid $border-gray;
 }
 
 // Universal styles
@@ -101,565 +43,120 @@ body {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   position: relative;
+  background-color: $primary-dark;
+  color: $secondary-light;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.add-task-form-bg {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 4;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &.no-display {
-    display: none;
-  }
-
-  .add-task-form-modal {
-    display: flex;
-    flex-direction: column;
-    background-color: $white-color;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    min-width: 600px;
-    position: relative;
-
-    .close-icon {
-      @include icon-bg;
-      background-color: $base-color;
-      color: $white-color;
-      position: absolute;
-      top: -8px;
-      right: -8px;
-
-      &:hover {
-        cursor: pointer;
-        background-color: darken($base-color, 5%);
-      }
-    }
-
-    & .form-row {
-      font-size: 1.2rem;
-      display: flex;
-      flex-direction: column;
-
-      & label {
-        padding-bottom: 5px;
-        width: fit-content;
-      }
-
-      & textarea {
-        resize: vertical;
-        max-height: 300px;
-      }
-
-      & input,
-      & select,
-      & textarea {
-        font-size: 1.2rem;
-        border-radius: 8px;
-        padding: 6px;
-        border: 1px solid darken($off-white, 4%);
-        margin-bottom: 20px;
-      }
-    }
-
-    & .add-task {
-      border: none;
-      padding: 10px;
-      color: $white-color;
-      background-color: $base-color;
-      font-size: 1.2rem;
-      border-radius: 8px;
-      margin-top: 10px;
-      transition: 0.2s ease-in-out;
-
-      &:hover {
-        cursor: pointer;
-        background-color: darken($base-color, 4%);
-      }
-    }
-  }
-}
-
-.container {
-  position: relative;
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow: hidden;
-}
-
-.container-wrapper {
-  display: grid;
-  grid-template-columns: auto 4fr;
-  grid-template-rows: auto 1fr;
-  gap: 20px;
-  padding: 30px;
-  position: absolute;
+// Header Styles
+header {
+  position: sticky;
   top: 0;
   left: 0;
-  height: 100%;
   width: 100%;
-  background-color: darken($white-color, 5%);
-}
+  @include header;
 
-#sidebar,
-#content {
-  border-radius: 10px;
-  background-color: $white-color;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+  .menu-icon-bg {
+    height: $header-height;
+    @include flex-center;
+    padding: 0 25px;
 
-#header {
-  grid-area: 1 / 2 / 2 / 3;
-  display: flex;
-  justify-content: end;
+    &:hover {
+      background-color: $hover-bg;
+    }
+  }
 
   .logo {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding-right: 25px;
   }
 }
 
-.edit-delete {
-  @include sidebar-modal;
+// Main Styles
+main {
   display: flex;
-  flex-direction: column;
-  width: auto;
+  position: fixed;
+  top: $header-height;
+  height: 100%;
 
-  span {
-    padding: 10px 25px 10px 15px;
-    transition: 0.2s ease-in-out;
+  // Sidebar Styles
+  #sidebar {
+    background-color: $secondary-dark-min;
+    border-right: 1px solid $border-gray;
+    height: 100%;
+    min-width: 350px;
 
-    &:hover {
-      background-color: darken($off-white, 2%);
-    }
-  }
-}
-
-#sidebar {
-  grid-area: 1 / 1 / 3 / 2;
-  min-width: 400px;
-  max-width: 700px;
-  max-height: 100%;
-  padding: 30px;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  .default-tasks,
-  .project-tasks h2 {
-    font-size: 1.1rem;
-  }
-
-  .default-tasks {
-    margin-bottom: 50px;
-
-    .default-tasks-title {
-      font-size: 1.4rem;
-      @include sidebar-title;
-    }
-
-    .default-task {
-      @include sidebar-bg;
-    }
-  }
-
-  .projects-title {
-    @include flex-space-between;
-    @include sidebar-title;
-    position: relative;
-
-    span:first-child {
-      font-size: 1.4rem;
-    }
-  }
-
-  .project-tasks-wrapper {
-    position: relative;
-
-    .project-tasks {
-      position: relative;
-
-      .no-projects {
-        opacity: 0.6;
-        padding: 15px 20px;
-        font-size: 1.1rem;
-      }
-
-      .project-task {
-        @include sidebar-bg;
-        @include flex-space-between;
-        position: relative;
-        padding-top: 0;
-        padding-bottom: 0;
-        padding-right: 0;
-
-        &.active {
-          .edit-delete {
-            color: #000;
-          }
-
-          .project-edit-icon {
-            i {
-              opacity: 1;
-              // transition: 0.2s ease-in-out;
-
-              &:hover {
-                opacity: 0.8;
-              }
-            }
-          }
-        }
-
-        .edit-delete {
-          top: -75px;
-          right: 15px;
-        }
-
-        .edit-project-name {
-          @include sidebar-modal;
-          @include flex-space-between;
-          top: 0;
-          left: 0;
-          width: 100%;
-          padding: 10px;
-
-          &:has(> .edit-project-error.open) {
-            padding-bottom: 25px;
-          }
-
-          & input {
-            width: 100%;
-            border: none;
-            padding: 5px;
-            font-size: 1rem;
-            margin-right: 10px;
-            border-radius: 5px;
-
-            &:focus {
-              outline: 1px solid #959595;
-            }
-          }
-
-          & button {
-            background-color: $add-btn;
-            color: $white-color;
-            border: 1px solid $add-btn;
-            padding: 5px 10px;
-            font-size: 1rem;
-            border-radius: 5px;
-            transition: 0.2s ease-in-out;
-
-            &:hover {
-              background-color: darken($add-btn, 4%);
-              cursor: pointer;
-            }
-          }
-
-          .edit-project-error {
-            @include form-error;
-            left: 10px;
-            bottom: 2px;
-          }
-        }
-
-        &:has(> .edit-delete.open) {
-          background-color: darken($white-color, 4%);
-        }
-
-        &.active:has(> .edit-delete.open) {
-          background-color: $base-color;
-        }
-
-        .project-edit-icon {
-          @include icon-bg;
-          height: auto;
-          width: auto;
-          padding: 15px 20px;
-
-          & i {
-            opacity: 0.7;
-          }
-
-          &:hover i {
-            opacity: 1;
-          }
-        }
-      }
-    }
-  }
-
-  .add-project-icon {
-    background-color: $base-color;
-    color: $white-color;
-    @include icon-bg;
-    transition: 0.2s ease-in-out;
-
-    &:hover {
-      cursor: pointer;
-      background-color: darken($base-color, 10%);
-    }
-
-    &.open {
-      transform: rotate(135deg);
-    }
-  }
-
-  .add-project-form {
-    top: -120px;
-    left: 0;
-    width: 100%;
-    padding: 10px;
-    @include sidebar-modal;
-
-    .project-form-row {
-      position: relative;
-
-      &:has(> .project-error.open) {
-        margin-bottom: 10px;
-      }
-    }
-
-    input {
-      width: 100%;
-      border: none;
-      padding: 10px;
-      font-size: 1rem;
-      margin-bottom: 15px;
-      border-radius: 5px;
-
-      &::placeholder {
-        opacity: 0.5;
-      }
-
-      &:focus {
-        outline: 1px solid #959595;
-      }
-    }
-
-    .project-error {
-      @include form-error;
-    }
-
-    .project-error.open {
-      display: block;
-    }
-
-    .add-project-btns {
+    .add-list-form {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      grid-template-columns: 1fr auto;
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      width: 100%;
+      margin-bottom: 20px;
+      background-color: $secondary-dark-min;
 
-      button {
+      #new-list {
         border: none;
-        padding: 10px;
+        border-bottom: 1px solid $border-gray;
+        background-color: transparent;
+        padding: 15px;
+        margin: 0 10px;
+        color: $secondary-light;
         font-size: 1rem;
-        border-radius: 5px;
-        transition: 0.2s ease-in-out;
+
+        &:focus {
+          outline: none;
+          border-bottom: 1px solid $secondary-light;
+        }
+      }
+
+      .add-list-btn {
+        background-color: $secondary-light;
+        border: none;
+        padding: 5px 20px;
 
         &:hover {
-          cursor: pointer;
+          background-color: $primary-light;
+        }
+      }
+    }
+
+    .list-container {
+      margin: 0 10px;
+
+      .list-item {
+        padding-left: 10px;
+        @include flex-space-between;
+
+        .delete-icon {
+          height: 45px;
+          padding: 0 15px;
+          @include flex-center;
+          opacity: 0;
+          color: $primary-light;
+          font-size: 1.1rem;
         }
 
-        &.add {
-          background-color: $add-btn;
-          color: $white-color;
-          border: 1px solid $add-btn;
+        &:hover {
+          .delete-icon {
+            opacity: 0.6;
 
-          &:hover {
-            background-color: darken($add-btn, 4%);
+            &:hover {
+              opacity: 1;
+            }
           }
         }
 
-        &.cancel {
-          background-color: $cancel-btn;
-          border: 1px solid darken($cancel-btn, 7%);
+        &:not(.active):hover {
+          background-color: $hover-bg;
+        }
 
-          &:hover {
-            background-color: darken($cancel-btn, 2%);
-          }
+        &.active {
+          background-color: $hightlight;
+          color: $primary-light;
         }
       }
-    }
-  }
-}
-
-#content {
-  grid-area: 2 / 2 / 3 / 3;
-  margin: 20px 0 0 20px;
-  position: relative;
-  overflow: hidden;
-
-  .content-wrapper {
-    padding: 30px;
-    padding-top: 0;
-    position: absolute;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: 100%;
-  }
-
-  .content-top-section {
-    @include flex-space-between;
-    padding: 30px 0;
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.89);
-    backdrop-filter: blur(5px);
-    z-index: 3;
-
-    .content-add-task {
-      background-color: $base-color;
-      width: 60px;
-      height: 60px;
-      @include flex-space-between;
-      justify-content: center;
-      font-size: 1.5rem;
-      border-radius: 100%;
-      color: $white-color;
-
-      &:hover {
-        cursor: pointer;
-        background-color: darken($base-color, 4%);
-      }
-
-      &:active {
-        transform: scale(0.97);
-      }
-    }
-  }
-
-  .content-tasks {
-    position: relative;
-  }
-
-  .content-task {
-    border: 1px solid #d3d3d3;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 1rem;
-
-    &:not(:last-child) {
-      margin-bottom: 20px;
-    }
-  }
-
-  .content-task-container,
-  .content-task-container-left,
-  .content-task-container-right {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .content-task-container-left {
-    margin-right: auto;
-
-    .check-complete {
-      width: 20px;
-      height: 20px;
-      border-radius: 100%;
-      border: 2px solid #333;
-      margin-right: 20px;
-
-      &.checked {
-        background-color: $base-color;
-      }
-
-      &.checked + .content-task-title {
-        text-decoration: line-through;
-        opacity: 0.5;
-      }
-
-      &:active {
-        transform: scale(0.95);
-      }
-
-      &:hover {
-        cursor: pointer;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
-    }
-
-    .content-task-title {
-      font-size: 1.2rem;
-      margin-right: 20px;
-    }
-
-    .content-task-priority {
-      background-color: $cancel-btn;
-      border: 1px solid darken($cancel-btn, 7%);
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-  }
-
-  .content-task-container-right {
-    position: relative;
-
-    .content-task-date {
-      opacity: 0.7;
-    }
-
-    .content-task-open,
-    .content-task-edit {
-      @include icon-bg;
-      opacity: 0.5;
-
-      &:hover {
-        cursor: pointer;
-        opacity: 1;
-      }
-    }
-
-    .content-task-open {
-      margin: 0 20px;
-
-      &.open {
-        transform: rotate(-180deg);
-      }
-    }
-
-    .edit-delete {
-      right: 0;
-      top: -300%;
-
-      & span:hover {
-        cursor: pointer;
-      }
-    }
-  }
-
-  .content-task-notes {
-    max-height: 0;
-    overflow: hidden;
-
-    &.open {
-      max-height: 1000px;
-    }
-
-    p {
-      padding-top: 15px;
-      margin-top: 15px;
-      border-top: 2px solid #ddd;
-      opacity: 0.7;
-      line-height: 1.5;
     }
   }
 }
