@@ -130,11 +130,13 @@ export const addProject = () => {
       } else if (deleteSpan.contains(e.target)) {
         deleteProject(projectName.textContent);
       } else if (projectTask.contains(e.target)) {
-        let oldActive = document.getElementsByClassName("active")[0];
-        if (oldActive) {
-          oldActive.classList.remove("active");
+        if (!projectTask.classList.contains("active")) {
+          let oldActive = document.getElementsByClassName("active")[0];
+          if (oldActive) {
+            oldActive.classList.remove("active");
+          }
+          projectTask.classList.add("active");
         }
-        projectTask.classList.add("active");
       }
     });
 
@@ -168,10 +170,6 @@ export const addProject = () => {
 
   // edit name of project
   const editProjectName = (target, editPayload) => {
-    let isActive = false;
-    if (target.classList.contains("active")) {
-      isActive = true;
-    }
     const {
       editProjectNameDiv,
       editProjectInput,

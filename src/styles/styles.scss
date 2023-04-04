@@ -406,6 +406,7 @@ a {
     background-color: $base-color;
     color: $white-color;
     @include icon-bg;
+    transition: 0.2s ease-in-out;
 
     &:hover {
       cursor: pointer;
