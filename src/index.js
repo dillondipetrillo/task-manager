@@ -1,13 +1,16 @@
+import { saveAndRender, clearElement, createList } from "./addListUtils";
+import { toggleAddTaskForm } from "./toggleAddTaskModal";
 import "./styles/styles.scss";
 
 const listsContainer = document.querySelector("[data-lists");
 const newListForm = document.querySelector("[data-new-list-form]");
 const newListInput = document.querySelector("[data-new-list-input]");
 
-const LOCAL_STORAGE_LIST_KEY = "taskapp.lists";
-const LOCAL_STORAGE_LIST_ID_KEY = "taskapp.selectedListId";
-let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
-let selectedListId = localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY);
+export const LOCAL_STORAGE_LIST_KEY = "taskapp.lists";
+export const LOCAL_STORAGE_LIST_ID_KEY = "taskapp.selectedListId";
+export let lists =
+  JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
+export let selectedListId = localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY);
 
 listsContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
@@ -27,25 +30,7 @@ newListForm.addEventListener("submit", (e) => {
   saveAndRender();
 });
 
-const createList = (name) => {
-  return {
-    id: Date.now().toString(),
-    name: name,
-    tasks: [],
-  };
-};
-
-const saveAndRender = () => {
-  save();
-  render();
-};
-
-const save = () => {
-  localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
-  localStorage.setItem(LOCAL_STORAGE_LIST_ID_KEY, selectedListId);
-};
-
-const render = () => {
+export const render = () => {
   clearElement(listsContainer);
   lists.forEach((list) => {
     const listElement = document.createElement("li");
@@ -74,10 +59,5 @@ const deleteList = (e) => {
   saveAndRender();
 };
 
-const clearElement = (element) => {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-};
-
 render();
+toggleAddTaskForm();
