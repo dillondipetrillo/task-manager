@@ -8,6 +8,11 @@ const allTasksContainer = document.querySelector("[data-all-tasks]");
 const allTasksList = document.querySelector("[data-default-list]");
 const newListForm = document.querySelector("[data-new-list-form]");
 const newListInput = document.querySelector("[data-new-list-input]");
+const listDisplayContainer = document.querySelector(
+  "[data-list-display-container]"
+);
+const listTitleElement = document.querySelector("[data-list-title]");
+const tasksContainer = document.querySelector("[data-tasks]");
 
 export const LOCAL_STORAGE_LIST_KEY = "taskapp.lists";
 export const LOCAL_STORAGE_LIST_ID_KEY = "taskapp.selectedListId";
@@ -38,6 +43,16 @@ newListForm.addEventListener("submit", (e) => {
 
 export const render = () => {
   clearElement(listsContainer);
+  renderLists();
+  const selectedList = lists.find((list) => list.id === selectedListId);
+  if (selectedListId == 0) {
+    listTitleElement.textContent = allTasksList.textContent;
+  } else {
+    listTitleElement.textContent = selectedList.name;
+  }
+};
+
+const renderLists = () => {
   if (selectedListId == "0") {
     allTasksList.classList.add("active");
   } else {

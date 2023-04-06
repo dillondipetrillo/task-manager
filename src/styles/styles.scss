@@ -319,7 +319,7 @@ main {
 
       .task {
         border: 1px solid lighten($border-gray, 5%);
-        margin-bottom: 20px;
+        margin-bottom: 30px;
 
         .task-top {
           @include flex-space-between;
@@ -332,24 +332,27 @@ main {
 
             .task-title {
               margin-right: 20px;
-              font-size: 1.2rem;
+              font-size: 1.1rem;
             }
 
             .task-priority {
               color: $primary-light;
               font-size: 0.8rem;
-              padding: 4px 12px;
+              padding: 2px 10px;
               border-radius: 10px;
               margin-right: 20px;
 
               &.low {
                 background-color: $green;
+                border: 1px solid darken($green, 20%);
               }
               &.medium {
                 background-color: $yellow;
+                border: 1px solid darken($yellow, 20%);
               }
               &.high {
                 background-color: $red;
+                border: 1px solid darken($red, 20%);
               }
             }
 
