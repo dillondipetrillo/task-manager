@@ -51,13 +51,13 @@
       </form>
     </div>
     <header>
-      <div class="menu-icon-bg">
+      <div class="menu-icon-bg" data-header-btn>
         <i class="fa-solid fa-bars"></i>
       </div>
       <div class="logo">TaskApp</div>
     </header>
     <main>
-      <section id="sidebar">
+      <section id="sidebar" class="open" data-sidebar>
         <form class="add-list-form" data-new-list-form>
           <input
             type="text"
@@ -71,16 +71,12 @@
             <i class="fa-solid fa-plus"></i>
           </button>
         </form>
-        <ul class="list-container" data-lists>
-          <!-- <li class="list-item active">
-            Go somewhere
-            <span class="delete-icon"><i class="fa-solid fa-xmark"></i></span>
+        <ul class="all-tasks list-container" data-all-tasks>
+          <li class="default-task list-item" data-list-id="0" data-default-list>
+            All Tasks
           </li>
-          <li class="list-item">
-            Do Something
-            <span class="delete-icon"><i class="fa-solid fa-xmark"></i></span>
-          </li> -->
         </ul>
+        <ul class="list-container" data-lists></ul>
       </section>
       <section id="content">
         <div class="add-task-container">
@@ -88,6 +84,58 @@
           <div class="add-task-button" data-add-task-btn>
             <i class="fa-solid fa-plus"></i>
             <span>Add Task</span>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task">
+            <div class="task-top">
+              <div class="task-info">
+                <div class="task-circle"></div>
+                <span class="task-title">Go to the gym</span>
+                <span class="task-priority low">Low</span>
+                <span class="task-due-date">04/11/2023</span>
+              </div>
+              <div class="task-icons">
+                <i class="fa-solid fa-chevron-down"></i>
+                <i class="fa-solid fa-xmark"></i>
+              </div>
+            </div>
+            <div class="task-descript">
+              Workout Monday-Thrusday and try to eat healthy.
+            </div>
+          </div>
+          <div class="task">
+            <div class="task-top">
+              <div class="task-info">
+                <div class="task-circle"></div>
+                <span class="task-title">Finish Dev Course</span>
+                <span class="task-priority high">High</span>
+                <span class="task-due-date">05/11/2023</span>
+              </div>
+              <div class="task-icons">
+                <i class="fa-solid fa-chevron-down"></i>
+                <i class="fa-solid fa-xmark"></i>
+              </div>
+            </div>
+            <div class="task-descript">
+              Finish the Odin Project course and move on to Python for Eveybody
+              course. Eventually do Harvard's cs50 course.
+            </div>
+          </div>
+          <div class="task">
+            <div class="task-top">
+              <div class="task-info">
+                <div class="task-circle"></div>
+                <span class="task-title">Wash Kylo</span>
+                <span class="task-priority medium">Medium</span>
+                <span class="task-due-date">04/12/2023</span>
+              </div>
+              <div class="task-icons">
+                <i class="fa-solid fa-chevron-down"></i>
+                <i class="fa-solid fa-xmark"></i>
+              </div>
+            </div>
+            <div class="task-descript">Wash Kylo</div>
           </div>
         </div>
       </section>

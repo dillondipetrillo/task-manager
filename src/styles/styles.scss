@@ -12,6 +12,7 @@ $form-bg: #212428;
 $hightlight: #0576b9;
 $red: #df1e59;
 $green: #2db67c;
+$yellow: #ecb22e;
 $header-height: 60px;
 
 // Mixins
@@ -186,9 +187,14 @@ main {
     background-color: $secondary-dark-min;
     border-right: 1px solid $border-gray;
     height: 100%;
-    min-width: 350px;
-    max-width: 350px;
-    padding-left: 10px;
+    width: 0;
+    overflow: hidden;
+
+    &.open {
+      min-width: 350px;
+      max-width: 350px;
+      padding-left: 10px;
+    }
 
     .add-list-form {
       display: grid;
@@ -227,6 +233,16 @@ main {
         &:hover {
           background-color: $primary-light;
         }
+      }
+    }
+
+    .all-tasks {
+      padding-bottom: 10px;
+      border-bottom: 1px solid $border-gray;
+      margin-bottom: 20px;
+
+      .default-task {
+        height: 50px;
       }
     }
 
@@ -294,6 +310,93 @@ main {
 
         i {
           margin-right: 10px;
+        }
+      }
+    }
+
+    .task-list {
+      padding: 25px;
+
+      .task {
+        border: 1px solid lighten($border-gray, 5%);
+        margin-bottom: 20px;
+
+        .task-top {
+          @include flex-space-between;
+          border-bottom: 1px solid lighten($border-gray, 5%);
+          background-color: $form-bg;
+          padding: 20px;
+
+          .task-info {
+            @include flex-center;
+
+            .task-title {
+              margin-right: 20px;
+              font-size: 1.2rem;
+            }
+
+            .task-priority {
+              color: $primary-light;
+              font-size: 0.8rem;
+              padding: 4px 12px;
+              border-radius: 10px;
+              margin-right: 20px;
+
+              &.low {
+                background-color: $green;
+              }
+              &.medium {
+                background-color: $yellow;
+              }
+              &.high {
+                background-color: $red;
+              }
+            }
+
+            .task-circle {
+              height: 15px;
+              width: 15px;
+              border-radius: 100%;
+              border: 1px solid $secondary-light;
+              margin-right: 20px;
+
+              &.fill {
+                background-color: $hightlight;
+              }
+            }
+
+            .task-due-date {
+              font-size: 0.9rem;
+              opacity: 0.7;
+            }
+          }
+
+          .task-icons {
+            @include flex-center;
+
+            i {
+              opacity: 0;
+              margin-left: 25px;
+              font-size: 1.1rem;
+            }
+          }
+        }
+
+        &:hover {
+          cursor: default;
+
+          .task-icons > i {
+            opacity: 0.7;
+
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+
+        .task-descript {
+          padding: 20px;
+          font-size: 0.9rem;
         }
       }
     }

@@ -1,8 +1,11 @@
 import { saveAndRender, clearElement, createList } from "./addListUtils";
 import { toggleAddTaskForm } from "./toggleAddTaskModal";
+import toggleSidebar from "./toggleSidebar";
 import "./styles/styles.scss";
 
 const listsContainer = document.querySelector("[data-lists");
+const allTasksContainer = document.querySelector("[data-all-tasks]");
+const allTasksList = document.querySelector("[data-default-list]");
 const newListForm = document.querySelector("[data-new-list-form]");
 const newListInput = document.querySelector("[data-new-list-input]");
 
@@ -12,12 +15,15 @@ export let lists =
   JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 export let selectedListId = localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY);
 
-listsContainer.addEventListener("click", (e) => {
+const setActiveSidebarItem = (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
     selectedListId = e.target.dataset.listId;
     saveAndRender();
   }
-});
+};
+
+listsContainer.addEventListener("click", setActiveSidebarItem);
+allTasksContainer.addEventListener("click", setActiveSidebarItem);
 
 newListForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -32,6 +38,11 @@ newListForm.addEventListener("submit", (e) => {
 
 export const render = () => {
   clearElement(listsContainer);
+  if (selectedListId == "0") {
+    allTasksList.classList.add("active");
+  } else {
+    allTasksList.classList.remove("active");
+  }
   lists.forEach((list) => {
     const listElement = document.createElement("li");
     listElement.classList.add("list-item");
@@ -54,10 +65,23 @@ export const render = () => {
 };
 
 const deleteList = (e) => {
-  const listParentId = e.target.closest(".list-item").dataset.listId;
+  const listParent = e.target.closest(".list-item");
+  const listParentId = listParent.dataset.listId;
   lists = lists.filter((list) => list.id !== listParentId);
+  const previousList = listParent.previousSibling;
+  const nextList = listParent.nextSibling;
+  if (previousList != null) {
+    const previousListId = previousList.dataset.listId;
+    selectedListId = previousListId;
+  } else if (nextList != null) {
+    const nextListId = nextList.dataset.listId;
+    selectedListId = nextListId;
+  } else {
+    selectedListId = 0;
+  }
   saveAndRender();
 };
 
 render();
 toggleAddTaskForm();
+toggleSidebar();
