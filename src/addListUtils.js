@@ -1,9 +1,11 @@
 import {
   LOCAL_STORAGE_LIST_ID_KEY,
   LOCAL_STORAGE_LIST_KEY,
+  LOCAL_STORAGE_ALL_LIST_KEY,
   render,
   lists,
   selectedListId,
+  allTasksStorage,
 } from ".";
 
 export const saveAndRender = () => {
@@ -13,6 +15,10 @@ export const saveAndRender = () => {
 
 const save = () => {
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
+  localStorage.setItem(
+    LOCAL_STORAGE_ALL_LIST_KEY,
+    JSON.stringify(allTasksStorage)
+  );
   localStorage.setItem(LOCAL_STORAGE_LIST_ID_KEY, selectedListId);
 };
 

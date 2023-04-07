@@ -22,9 +22,13 @@ const taskTemplate = document.getElementById("task-template");
 
 export const LOCAL_STORAGE_LIST_KEY = "taskapp.lists";
 export const LOCAL_STORAGE_LIST_ID_KEY = "taskapp.selectedListId";
+export const LOCAL_STORAGE_ALL_LIST_KEY = "taskapp.allTasksList";
 
 export let lists =
   JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
+
+export let allTasksStorage =
+  localStorage.getItem(LOCAL_STORAGE_ALL_LIST_KEY) || [];
 
 export let selectedListId =
   localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY) || "0";
@@ -65,6 +69,16 @@ export const render = () => {
 };
 
 const renderTasks = (selectedList) => {
+  // let activeList;
+  // if (selectedListId == "0") {
+  //   const allTasks = [];
+  //   lists.forEach((list) => {
+  //     allTasks.push(...list.tasks);
+  //   });
+  //   activeList = allTasks;
+  // } else {
+  //   activeList = selectedList.tasks;
+  // }
   selectedList.tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
     const taskCircle = taskElement.querySelector(".task-circle-container");
@@ -110,7 +124,7 @@ const renderTasks = (selectedList) => {
       saveAndRender();
     });
 
-    taskDeleteIcon.addEventListener("click", (e) => {
+    taskDeleteIcon.addEventListener("click", () => {
       selectedList.tasks = selectedList.tasks.filter(
         (delTask) => delTask.id !== task.id
       );

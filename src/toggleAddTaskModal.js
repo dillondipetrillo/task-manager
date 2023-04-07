@@ -31,6 +31,7 @@ export const toggleAddTaskForm = () => {
     if (!addTaskFormBg.classList.contains("show")) {
       addTaskFormBg.classList.add("show");
       document.body.classList.add("no-scroll");
+      taskFormTitle.focus();
     }
   };
 
