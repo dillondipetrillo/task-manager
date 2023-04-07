@@ -15,7 +15,7 @@
   </head>
   <body>
     <div class="add-task-form-bg" data-add-task-form-bg>
-      <form class="add-task-form-modal">
+      <form class="add-task-form-modal" data-add-task-form>
         <div class="form-header">
           <div class="form-title">Create a Task</div>
           <div class="close-icon" data-close-add-task>
@@ -24,15 +24,27 @@
         </div>
         <div class="form-row">
           <label for="task-title">Title*</label>
-          <input type="text" id="task-title" name="task-title" required />
+          <input
+            type="text"
+            id="task-title"
+            name="task-title"
+            autocomplete="off"
+            required
+            data-input-title
+          />
         </div>
         <div class="form-row">
           <label for="due-date">Due Date</label>
-          <input type="date" name="due-date" id="due-date" />
+          <input
+            type="date"
+            name="due-date"
+            id="due-date"
+            data-input-due-date
+          />
         </div>
         <div class="form-row">
           <label for="priority">Priority</label>
-          <select name="priority" id="priority">
+          <select name="priority" id="priority" data-input-priority>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
@@ -45,6 +57,7 @@
             id="description"
             cols="30"
             rows="10"
+            data-textarea-descript
           ></textarea>
         </div>
         <button class="add-task-btn">Submit</button>
@@ -86,58 +99,7 @@
             <span>Add Task</span>
           </div>
         </div>
-        <div class="task-list" data-tasks>
-          <div class="task">
-            <div class="task-top">
-              <div class="task-info">
-                <div class="task-circle"></div>
-                <span class="task-title">Go to the gym</span>
-                <span class="task-priority low">Low</span>
-                <span class="task-due-date">04/11/2023</span>
-              </div>
-              <div class="task-icons">
-                <i class="fa-solid fa-chevron-down"></i>
-                <i class="fa-solid fa-xmark"></i>
-              </div>
-            </div>
-            <div class="task-descript">
-              Workout Monday-Thrusday and try to eat healthy.
-            </div>
-          </div>
-          <div class="task">
-            <div class="task-top">
-              <div class="task-info">
-                <div class="task-circle"></div>
-                <span class="task-title">Finish Dev Course</span>
-                <span class="task-priority high">High</span>
-                <span class="task-due-date">05/11/2023</span>
-              </div>
-              <div class="task-icons">
-                <i class="fa-solid fa-chevron-down"></i>
-                <i class="fa-solid fa-xmark"></i>
-              </div>
-            </div>
-            <div class="task-descript">
-              Finish the Odin Project course and move on to Python for Eveybody
-              course. Eventually do Harvard's cs50 course.
-            </div>
-          </div>
-          <div class="task">
-            <div class="task-top">
-              <div class="task-info">
-                <div class="task-circle fill"></div>
-                <span class="task-title strike">Wash Kylo</span>
-                <span class="task-priority medium">Medium</span>
-                <span class="task-due-date">04/12/2023</span>
-              </div>
-              <div class="task-icons">
-                <i class="fa-solid fa-chevron-down"></i>
-                <i class="fa-solid fa-xmark"></i>
-              </div>
-            </div>
-            <div class="task-descript">Wash Kylo</div>
-          </div>
-        </div>
+        <div class="task-list" data-tasks></div>
       </section>
     </main>
 

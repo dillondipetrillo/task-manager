@@ -22,8 +22,11 @@ const taskTemplate = document.getElementById("task-template");
 
 export const LOCAL_STORAGE_LIST_KEY = "taskapp.lists";
 export const LOCAL_STORAGE_LIST_ID_KEY = "taskapp.selectedListId";
+export const LOCAL_STORAGE_DEFAULT_LIST_KEY = "taskapp.allTasks";
+
 export let lists =
   JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
+
 export let selectedListId =
   localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY) || "0";
 
@@ -45,20 +48,20 @@ newListForm.addEventListener("submit", (e) => {
   newListInput.value = null;
   newListInput.blur();
   lists.push(list);
+  selectedListId = list.id;
   saveAndRender();
 });
 
 export const render = () => {
   clearElement(listsContainer);
   renderLists();
-  const selectedList = lists.find((list) => list.id === selectedListId);
+  let selectedList = lists.find((list) => list.id === selectedListId);
   if (selectedListId == 0) {
     listTitleElement.textContent = allTasksList.textContent;
   } else {
     listTitleElement.textContent = selectedList.name;
   }
   clearElement(tasksContainer);
-  console.log(selectedList);
   renderTasks(selectedList);
 };
 
@@ -80,7 +83,7 @@ const renderTasks = (selectedList) => {
     const taskDescript = taskElement.querySelector(".task-descript");
     taskDescript.textContent = task.description;
     const taskIcons = taskElement.querySelector(".task-icons");
-    if (task.description != null || task.description != undefined) {
+    if (task.description !== "") {
       const taskOpenIcon = document.createElement("i");
       taskOpenIcon.classList.add("task-open", "fa-solid", "fa-chevron-down");
       taskIcons.insertBefore(taskOpenIcon, taskIcons.firstChild);
@@ -108,7 +111,7 @@ const renderTasks = (selectedList) => {
       saveAndRender();
     });
 
-    taskDeleteIcon.addEventListener("click", () => {
+    taskDeleteIcon.addEventListener("click", (e) => {
       selectedList.tasks = selectedList.tasks.filter(
         (delTask) => delTask.id !== task.id
       );
