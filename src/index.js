@@ -58,13 +58,14 @@ export const render = () => {
     listTitleElement.textContent = selectedList.name;
   }
   clearElement(tasksContainer);
+  console.log(selectedList);
   renderTasks(selectedList);
 };
 
 const renderTasks = (selectedList) => {
   selectedList.tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
-    const taskCircle = taskElement.querySelector(".task-circle");
+    const taskCircle = taskElement.querySelector(".task-circle-container");
     task.complete ? taskCircle.classList.add("fill") : null;
     const taskTitle = taskElement.querySelector(".task-title");
     task.complete ? taskTitle.classList.add("strike") : null;
@@ -108,7 +109,10 @@ const renderTasks = (selectedList) => {
     });
 
     taskDeleteIcon.addEventListener("click", () => {
-      // do deletion
+      selectedList.tasks = selectedList.tasks.filter(
+        (delTask) => delTask.id !== task.id
+      );
+      saveAndRender();
     });
 
     tasksContainer.appendChild(taskElement);
