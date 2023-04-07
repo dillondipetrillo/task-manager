@@ -22,7 +22,6 @@ const taskTemplate = document.getElementById("task-template");
 
 export const LOCAL_STORAGE_LIST_KEY = "taskapp.lists";
 export const LOCAL_STORAGE_LIST_ID_KEY = "taskapp.selectedListId";
-export const LOCAL_STORAGE_DEFAULT_LIST_KEY = "taskapp.allTasks";
 
 export let lists =
   JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
