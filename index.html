@@ -125,8 +125,8 @@
           <div class="task">
             <div class="task-top">
               <div class="task-info">
-                <div class="task-circle"></div>
-                <span class="task-title">Wash Kylo</span>
+                <div class="task-circle fill"></div>
+                <span class="task-title strike">Wash Kylo</span>
                 <span class="task-priority medium">Medium</span>
                 <span class="task-due-date">04/12/2023</span>
               </div>
@@ -140,5 +140,22 @@
         </div>
       </section>
     </main>
+
+    <template id="task-template">
+      <div class="task">
+        <div class="task-top">
+          <div class="task-info">
+            <div class="task-circle"></div>
+            <span class="task-title"></span>
+            <span class="task-priority"></span>
+            <span class="task-due-date"></span>
+          </div>
+          <div class="task-icons">
+            <i class="fa-solid fa-xmark delete-task"></i>
+          </div>
+        </div>
+        <div class="task-descript"></div>
+      </div>
+    </template>
   <script defer src="bundle.js"></script></body>
 </html>
