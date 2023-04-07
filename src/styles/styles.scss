@@ -324,7 +324,6 @@ main {
 
         .task-top {
           @include flex-space-between;
-          border-bottom: 1px solid lighten($border-gray, 5%);
           background-color: $form-bg;
           padding: 10px 20px;
 
@@ -334,6 +333,10 @@ main {
             .task-title {
               margin-right: 20px;
               font-size: 1.1rem;
+
+              &.strike {
+                text-decoration: line-through;
+              }
             }
 
             .task-priority {
@@ -378,9 +381,13 @@ main {
           .task-icons {
             @include flex-center;
 
+            .task-open.flip {
+              transform: rotate(180deg);
+            }
+
             i {
               opacity: 0;
-              margin-left: 15px;
+              margin-left: 10px;
               font-size: 1.1rem;
               padding: 10px;
             }
@@ -403,6 +410,12 @@ main {
           padding: 20px;
           font-size: 0.9rem;
           line-height: 1.5;
+          display: none;
+
+          &.display {
+            display: block;
+            border-top: 1px solid lighten($border-gray, 5%);
+          }
         }
       }
     }

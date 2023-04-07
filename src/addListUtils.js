@@ -26,6 +26,33 @@ export const createList = (name) => {
   return {
     id: Date.now().toString(),
     name: name,
-    tasks: [],
+    tasks: [
+      {
+        id: 123,
+        title: "Made by JS",
+        description: "Inside addListUtils.js",
+        complete: false,
+        dueDate: "04/11/1996",
+        priority: "high",
+      },
+      {
+        id: 4,
+        title: "Test 2",
+        complete: false,
+        description: null,
+        dueDate: null,
+        priority: "low",
+      },
+    ],
   };
+};
+
+export const getPriority = (task) => {
+  if (task.priority === "low") {
+    return "low";
+  } else if (task.priority === "medium") {
+    return "medium";
+  } else if (task.priority === "high") {
+    return "high";
+  }
 };
