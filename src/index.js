@@ -18,7 +18,8 @@ export const LOCAL_STORAGE_LIST_KEY = "taskapp.lists";
 export const LOCAL_STORAGE_LIST_ID_KEY = "taskapp.selectedListId";
 export let lists =
   JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
-export let selectedListId = localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY);
+export let selectedListId =
+  localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY) || "0";
 
 const setActiveSidebarItem = (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
@@ -50,6 +51,8 @@ export const render = () => {
   } else {
     listTitleElement.textContent = selectedList.name;
   }
+  clearElement(tasksContainer);
+  renderTasks(selectedList)
 };
 
 const renderLists = () => {

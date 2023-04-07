@@ -76,7 +76,7 @@ body {
 
   .add-task-form-modal {
     background-color: $form-bg;
-    min-width: 450px;
+    min-width: 500px;
 
     .form-header {
       border: 1px solid lighten($border-gray, 5%);
@@ -103,23 +103,24 @@ body {
     .form-row {
       display: flex;
       flex-direction: column;
-      padding: 0 25px;
+      padding: 0 30px;
       margin-bottom: 10px;
 
       & label {
         width: fit-content;
         margin-bottom: 5px;
+        font-size: 1.1rem;
       }
 
       & input[type="text"],
       & input[type="date"],
       & select,
       & textarea {
-        font-size: 1rem;
+        font-size: 1.1rem;
         background-color: $primary-dark;
         color: $secondary-light;
         border: 1px solid lighten($border-gray, 5%);
-        padding: 5px;
+        padding: 8px;
 
         &:focus {
           outline: none;
@@ -138,7 +139,7 @@ body {
       background-color: $green;
       color: $primary-light;
       border: none;
-      margin: 10px 0 20px 25px;
+      margin: 10px 0 30px 25px;
       padding: 15px 30px;
       font-size: 1rem;
 
@@ -160,7 +161,7 @@ header {
   .menu-icon-bg {
     height: $header-height;
     @include flex-center;
-    padding: 0 25px;
+    padding: 0 30px;
 
     &:hover {
       background-color: $hover-bg;
@@ -325,7 +326,7 @@ main {
           @include flex-space-between;
           border-bottom: 1px solid lighten($border-gray, 5%);
           background-color: $form-bg;
-          padding: 20px;
+          padding: 10px 20px;
 
           .task-info {
             @include flex-center;
@@ -379,8 +380,9 @@ main {
 
             i {
               opacity: 0;
-              margin-left: 25px;
+              margin-left: 15px;
               font-size: 1.1rem;
+              padding: 10px;
             }
           }
         }
@@ -400,6 +402,7 @@ main {
         .task-descript {
           padding: 20px;
           font-size: 0.9rem;
+          line-height: 1.5;
         }
       }
     }
