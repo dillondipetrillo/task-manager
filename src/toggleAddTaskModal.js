@@ -42,6 +42,7 @@ export const toggleAddTaskForm = () => {
       const activeList = lists.find((list) => list.id === selectedListId);
       const newTaskObj = createTask();
       activeList.tasks.push(newTaskObj);
+
       taskFormTitle.value = "";
       taskFormDueDate.value = "";
       taskFormPriority.value = "low";

@@ -28,7 +28,7 @@ export let lists =
   JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 
 export let allTasksStorage =
-  localStorage.getItem(LOCAL_STORAGE_ALL_LIST_KEY) || [];
+  JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_LIST_KEY)) || [];
 
 export let selectedListId =
   localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY) || "0";
@@ -69,17 +69,17 @@ export const render = () => {
 };
 
 const renderTasks = (selectedList) => {
-  // let activeList;
-  // if (selectedListId == "0") {
-  //   const allTasks = [];
-  //   lists.forEach((list) => {
-  //     allTasks.push(...list.tasks);
-  //   });
-  //   activeList = allTasks;
-  // } else {
-  //   activeList = selectedList.tasks;
-  // }
-  selectedList.tasks.forEach((task) => {
+  let activeList;
+  if (selectedListId == "0") {
+    const allTasks = [];
+    lists.forEach((list) => {
+      allTasks.push(...list.tasks);
+    });
+    activeList = allTasks;
+  } else {
+    activeList = selectedList.tasks;
+  }
+  activeList.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
     const taskCircle = taskElement.querySelector(".task-circle-container");
     task.complete ? taskCircle.classList.add("fill") : null;
