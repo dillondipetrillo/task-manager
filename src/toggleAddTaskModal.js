@@ -1,4 +1,4 @@
-import { lists, selectedListId } from ".";
+import { lists, selectedListId, allTasksStorage } from ".";
 import { saveAndRender } from "./addListUtils";
 
 const addTaskFormBg = document.querySelector("[data-add-task-form-bg]");
@@ -39,9 +39,16 @@ export const toggleAddTaskForm = () => {
     e.preventDefault();
     if (taskFormTitle.value === "") return;
     else {
-      const activeList = lists.find((list) => list.id === selectedListId);
-      const newTaskObj = createTask();
-      activeList.tasks.push(newTaskObj);
+      let activeList;
+      if (selectedListId == "0") {
+        activeList = allTasksStorage.id;
+        const newDefaultTask = createTask();
+        allTasksStorage.tasks.push(newDefaultTask);
+      } else {
+        activeList = lists.find((list) => list.id === selectedListId);
+        const newTaskObj = createTask();
+        activeList.tasks.push(newTaskObj);
+      }
 
       taskFormTitle.value = "";
       taskFormDueDate.value = "";
@@ -61,6 +68,7 @@ export const toggleAddTaskForm = () => {
       complete: false,
       dueDate: taskFormDueDate.value,
       priority: taskFormPriority.value,
+      parentId: selectedListId,
     };
   };
 

@@ -27,8 +27,12 @@ export const LOCAL_STORAGE_ALL_LIST_KEY = "taskapp.allTasksList";
 export let lists =
   JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 
-export let allTasksStorage =
-  JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_LIST_KEY)) || [];
+export let allTasksStorage = JSON.parse(
+  localStorage.getItem(LOCAL_STORAGE_ALL_LIST_KEY)
+) || {
+  id: "0",
+  tasks: [],
+};
 
 export let selectedListId =
   localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY) || "0";
@@ -59,11 +63,13 @@ export const render = () => {
   clearElement(listsContainer);
   renderLists();
   let selectedList = lists.find((list) => list.id === selectedListId);
-  if (selectedListId == 0) {
+
+  if (selectedListId == "0") {
     listTitleElement.textContent = allTasksList.textContent;
   } else {
     listTitleElement.textContent = selectedList.name;
   }
+
   clearElement(tasksContainer);
   renderTasks(selectedList);
 };
@@ -71,7 +77,7 @@ export const render = () => {
 const renderTasks = (selectedList) => {
   let activeList;
   if (selectedListId == "0") {
-    const allTasks = [];
+    const allTasks = [...allTasksStorage.tasks];
     lists.forEach((list) => {
       allTasks.push(...list.tasks);
     });
@@ -79,6 +85,7 @@ const renderTasks = (selectedList) => {
   } else {
     activeList = selectedList.tasks;
   }
+
   activeList.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
     const taskCircle = taskElement.querySelector(".task-circle-container");
@@ -125,9 +132,16 @@ const renderTasks = (selectedList) => {
     });
 
     taskDeleteIcon.addEventListener("click", () => {
-      selectedList.tasks = selectedList.tasks.filter(
-        (delTask) => delTask.id !== task.id
-      );
+      if (task.parentId == "0") {
+        allTasksStorage.tasks = allTasksStorage.tasks.filter(
+          (delTask) => delTask.id !== task.id
+        );
+      } else {
+        let targetList = lists.find((list) => list.id === task.parentId);
+        targetList.tasks = targetList.tasks.filter(
+          (delTask) => delTask.id !== task.id
+        );
+      }
       saveAndRender();
     });
 
