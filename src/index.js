@@ -6,6 +6,14 @@ import {
 } from "./addListUtils";
 import { toggleAddTaskForm } from "./toggleAddTaskModal";
 import toggleSidebar from "./toggleSidebar";
+import {
+  format,
+  formatDistanceStrict,
+  isToday,
+  isSameWeek,
+  isSameMonth,
+  isSameYear,
+} from "date-fns";
 import "./styles/styles.scss";
 
 const listsContainer = document.querySelector("[data-lists");
@@ -19,6 +27,7 @@ const listDisplayContainer = document.querySelector(
 const listTitleElement = document.querySelector("[data-list-title]");
 const tasksContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
+const taskFilter = document.querySelector("[data-filter-tasks]");
 
 export const LOCAL_STORAGE_LIST_KEY = "taskapp.lists";
 export const LOCAL_STORAGE_LIST_ID_KEY = "taskapp.selectedListId";
@@ -44,8 +53,15 @@ const setActiveSidebarItem = (e) => {
   }
 };
 
+let filter = taskFilter.value;
+
 listsContainer.addEventListener("click", setActiveSidebarItem);
 allTasksContainer.addEventListener("click", setActiveSidebarItem);
+
+taskFilter.addEventListener("change", (e) => {
+  filter = e.target.value;
+  render();
+});
 
 newListForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -86,6 +102,36 @@ const renderTasks = (selectedList) => {
     activeList = selectedList.tasks;
   }
 
+  if (filter.toLowerCase() === "day") {
+    activeList = activeList.filter((task) => {
+      if (task.dueDate) {
+        const formattedTaskDate = getFormattedDate(task.dueDate);
+        return isToday(new Date(formattedTaskDate));
+      }
+    });
+  } else if (filter.toLowerCase() === "week") {
+    activeList = activeList.filter((task) => {
+      if (task.dueDate) {
+        const formattedTaskDate = getFormattedDate(task.dueDate);
+        return isSameWeek(new Date(formattedTaskDate), new Date());
+      }
+    });
+  } else if (filter.toLowerCase() === "month") {
+    activeList = activeList.filter((task) => {
+      if (task.dueDate) {
+        const formattedTaskDate = getFormattedDate(task.dueDate);
+        return isSameMonth(new Date(formattedTaskDate), new Date());
+      }
+    });
+  } else if (filter.toLowerCase() === "year") {
+    activeList = activeList.filter((task) => {
+      if (task.dueDate) {
+        const formattedTaskDate = getFormattedDate(task.dueDate);
+        return isSameYear(new Date(formattedTaskDate), new Date());
+      }
+    });
+  }
+
   activeList.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
     const taskCircle = taskElement.querySelector(".task-circle-container");
@@ -98,8 +144,37 @@ const renderTasks = (selectedList) => {
     taskPriority.classList.add(priority);
     taskPriority.textContent =
       priority.charAt(0).toUpperCase() + priority.slice(1);
-    const taskDate = taskElement.querySelector(".task-due-date");
-    taskDate.textContent = task.dueDate;
+
+    // Format due date if date is provided
+    if (task.dueDate) {
+      const taskDate = taskElement.querySelector(".task-due-date");
+      task.complete ? taskDate.classList.add("strike") : null;
+
+      const formattedDate = getFormattedDate(task.dueDate);
+
+      // Check if due date is overdue
+      if (new Date(formattedDate) < new Date()) {
+        // Is overdue
+        let lateBy = formatDistanceStrict(new Date(formattedDate), new Date(), {
+          unit: "day",
+          roundingMethod: "floor",
+        });
+
+        if (
+          new Date(formattedDate).getMonth() == new Date().getMonth() &&
+          new Date(formattedDate).getDate() == new Date().getDate()
+        ) {
+          taskDate.textContent = formattedDate;
+        } else {
+          taskDate.classList.add("overdue");
+          taskDate.textContent = `${formattedDate} - ${lateBy} ago`;
+        }
+      } else {
+        // Is not overdue
+        taskDate.textContent = formattedDate;
+      }
+    }
+
     const taskDescript = taskElement.querySelector(".task-descript");
     taskDescript.textContent = task.description;
     const taskIcons = taskElement.querySelector(".task-icons");
@@ -192,6 +267,12 @@ const deleteList = (e) => {
     selectedListId = 0;
   }
   saveAndRender();
+};
+
+const getFormattedDate = (taskDate) => {
+  const newDate = format(new Date(taskDate), "M/d/yyyy").split("/");
+  newDate[1]++;
+  return newDate.join("/");
 };
 
 render();

@@ -49,6 +49,8 @@ body {
   position: relative;
   background-color: $primary-dark;
   color: $secondary-light;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
 
 .no-scroll {
@@ -57,6 +59,10 @@ body {
 
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 // Add Task Form Modal Styles
@@ -195,6 +201,7 @@ main {
       min-width: 350px;
       max-width: 350px;
       padding-left: 10px;
+      overflow-y: scroll;
     }
 
     .add-list-form {
@@ -290,33 +297,65 @@ main {
   // Content Styles
   #content {
     flex: 1;
+    overflow-y: scroll;
+    position: relative;
 
-    .add-task-container {
-      @include header;
-      background-color: $primary-dark;
+    .content-section-head {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 3;
 
-      .task-list-title {
-        padding-left: 25px;
-      }
+      .add-task-container {
+        @include header;
+        background-color: $primary-dark;
 
-      .add-task-button {
-        padding: 0 40px;
-        @include flex-center;
-        height: $header-height;
-
-        &:hover {
-          background-color: $hover-bg;
-          cursor: default;
+        .task-list-title {
+          padding-left: 25px;
         }
 
-        i {
-          margin-right: 10px;
+        .add-task-button {
+          padding: 0 40px;
+          @include flex-center;
+          height: $header-height;
+
+          &:hover {
+            background-color: $hover-bg;
+            cursor: default;
+          }
+
+          i {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      .content-filter-container {
+        @include header;
+        display: block;
+        background-color: $primary-dark;
+        padding: 8px 25px;
+
+        & select {
+          background-color: $primary-dark;
+          color: $secondary-light;
+          border: 1px solid lighten($border-gray, 5%);
+          padding: 4px;
+          min-width: 100px;
+          margin-left: 5px;
+          font-size: 0.9rem;
+
+          &:focus {
+            outline: none;
+            border: 1px solid lighten($border-gray, 20%);
+          }
         }
       }
     }
 
     .task-list {
       padding: 25px;
+      margin-bottom: 30px;
 
       .task {
         border: 1px solid lighten($border-gray, 5%);
@@ -379,6 +418,16 @@ main {
             .task-due-date {
               font-size: 0.9rem;
               opacity: 0.7;
+
+              &.strike {
+                text-decoration: line-through;
+              }
+
+              &.overdue {
+                color: $red;
+                opacity: 1;
+                font-weight: 600;
+              }
             }
           }
 
