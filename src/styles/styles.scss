@@ -355,120 +355,141 @@ main {
 
     .task-list {
       padding: 25px;
+      padding-bottom: 0;
+    }
+
+    .task {
+      border: 1px solid lighten($border-gray, 5%);
       margin-bottom: 30px;
 
-      .task {
-        border: 1px solid lighten($border-gray, 5%);
-        margin-bottom: 30px;
+      .task-top {
+        @include flex-space-between;
+        background-color: $form-bg;
+        padding: 10px 20px 10px 10px;
 
-        .task-top {
-          @include flex-space-between;
-          background-color: $form-bg;
-          padding: 10px 20px 10px 10px;
+        .task-info {
+          @include flex-center;
 
-          .task-info {
-            @include flex-center;
+          .task-title {
+            margin-right: 20px;
+            font-size: 1.1rem;
 
-            .task-title {
-              margin-right: 20px;
-              font-size: 1.1rem;
-
-              &.strike {
-                text-decoration: line-through;
-              }
-            }
-
-            .task-priority {
-              color: $primary-light;
-              font-size: 0.8rem;
-              padding: 2px 10px;
-              border-radius: 10px;
-              margin-right: 20px;
-
-              &.low {
-                background-color: $green;
-                border: 1px solid darken($green, 20%);
-              }
-              &.medium {
-                background-color: $yellow;
-                border: 1px solid darken($yellow, 20%);
-              }
-              &.high {
-                background-color: $red;
-                border: 1px solid darken($red, 20%);
-              }
-            }
-
-            .task-circle-container {
-              padding: 10px;
-              margin-right: 10px;
-
-              &.fill .task-circle {
-                background-color: $hightlight;
-              }
-
-              .task-circle {
-                height: 15px;
-                width: 15px;
-                border-radius: 100%;
-                border: 1px solid $secondary-light;
-              }
-            }
-
-            .task-due-date {
-              font-size: 0.9rem;
-              opacity: 0.7;
-
-              &.strike {
-                text-decoration: line-through;
-              }
-
-              &.overdue {
-                color: $red;
-                opacity: 1;
-                font-weight: 600;
-              }
+            &.strike {
+              text-decoration: line-through;
             }
           }
 
-          .task-icons {
-            @include flex-center;
+          .task-priority {
+            color: $primary-light;
+            font-size: 0.8rem;
+            padding: 2px 10px;
+            border-radius: 10px;
+            margin-right: 20px;
 
-            .task-open.flip {
-              transform: rotate(180deg);
+            &.low {
+              background-color: $green;
+              border: 1px solid darken($green, 20%);
             }
-
-            i {
-              opacity: 0;
-              margin-left: 10px;
-              font-size: 1.1rem;
-              padding: 10px;
+            &.medium {
+              background-color: $yellow;
+              border: 1px solid darken($yellow, 20%);
+            }
+            &.high {
+              background-color: $red;
+              border: 1px solid darken($red, 20%);
             }
           }
-        }
 
-        &:hover {
-          cursor: default;
+          .task-circle-container {
+            padding: 10px;
+            margin-right: 10px;
 
-          .task-icons > i {
+            &.fill .task-circle {
+              background-color: $hightlight;
+            }
+
+            .task-circle {
+              height: 15px;
+              width: 15px;
+              border-radius: 100%;
+              border: 1px solid $secondary-light;
+            }
+          }
+
+          .task-due-date {
+            font-size: 0.9rem;
             opacity: 0.7;
 
-            &:hover {
+            &.strike {
+              text-decoration: line-through;
+            }
+
+            &.overdue {
+              color: $red;
               opacity: 1;
+              font-weight: 600;
             }
           }
         }
 
-        .task-descript {
-          padding: 20px;
-          font-size: 0.9rem;
-          line-height: 1.5;
-          display: none;
+        .task-icons {
+          @include flex-center;
 
-          &.display {
-            display: block;
-            border-top: 1px solid lighten($border-gray, 5%);
+          .task-open.flip {
+            transform: rotate(180deg);
           }
+
+          i {
+            opacity: 0;
+            margin-left: 10px;
+            font-size: 1.1rem;
+            padding: 10px;
+          }
+        }
+      }
+
+      &:hover {
+        cursor: default;
+
+        .task-icons > i {
+          opacity: 0.7;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+
+      .task-descript {
+        padding: 20px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        display: none;
+
+        &.display {
+          display: block;
+          border-top: 1px solid lighten($border-gray, 5%);
+        }
+      }
+    }
+
+    .other-lists {
+      margin-bottom: calc($header-height + 30px);
+
+      .other-list-title {
+        border-bottom: 1px solid $border-gray;
+        padding: 20px 25px;
+        @include flex-space-between;
+
+        & h2:hover {
+          cursor: default;
+        }
+      }
+
+      .other-list-container {
+        .other-tasks-container {
+          margin-top: 30px;
+          padding: 0 25px;
         }
       }
     }

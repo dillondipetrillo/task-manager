@@ -23,8 +23,10 @@ const save = () => {
 };
 
 export const clearElement = (element) => {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
+  if (element != null) {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
   }
 };
 
