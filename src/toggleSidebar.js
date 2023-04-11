@@ -3,10 +3,10 @@ const sidebar = document.querySelector("[data-sidebar]");
 
 const toggleSidebar = () => {
   headerBtn.addEventListener("click", () => {
-    if (sidebar.classList.contains("open")) {
-      sidebar.classList.remove("open");
+    if (sidebar.classList.contains("toggle")) {
+      sidebar.classList.remove("toggle");
     } else {
-      sidebar.classList.add("open");
+      sidebar.classList.add("toggle");
     }
   });
 };

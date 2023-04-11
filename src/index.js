@@ -6,14 +6,7 @@ import {
 } from "./addListUtils";
 import { toggleAddTaskForm } from "./toggleAddTaskModal";
 import toggleSidebar from "./toggleSidebar";
-import {
-  format,
-  formatDistanceStrict,
-  isToday,
-  isSameWeek,
-  isSameMonth,
-  isSameYear,
-} from "date-fns";
+import { format, formatDistanceStrict } from "date-fns";
 import "./styles/styles.scss";
 
 const listsContainer = document.querySelector("[data-lists");
@@ -21,9 +14,6 @@ const allTasksContainer = document.querySelector("[data-all-tasks]");
 const allTasksList = document.querySelector("[data-default-list]");
 const newListForm = document.querySelector("[data-new-list-form]");
 const newListInput = document.querySelector("[data-new-list-input]");
-const listDisplayContainer = document.querySelector(
-  "[data-list-display-container]"
-);
 const listTitleElement = document.querySelector("[data-list-title]");
 const tasksContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
@@ -96,55 +86,12 @@ const renderTasks = (selectedList) => {
   let activeList;
   if (selectedListId == "0") {
     const allTasks = [...allTasksStorage.tasks];
-    // lists.forEach((list) => {
-    //   allTasks.push(...list.tasks);
-    // });
     activeList = allTasks;
   } else {
     activeList = selectedList.tasks;
   }
 
-  if (filter.toLowerCase() === "recent") {
-    activeList = activeList
-      .sort((a, b) => {
-        if (a.dueDate && b.dueDate) {
-          const formattedTaskDateA = getFormattedDate(a.dueDate);
-          const formattedTaskDateB = getFormattedDate(b.dueDate);
-          return new Date(formattedTaskDateA) - new Date(formattedTaskDateB);
-        }
-      })
-      .sort((a, b) => {
-        if (a.dueDate && !b.dueDate) {
-          return -1;
-        }
-      });
-  } else if (filter.toLowerCase() === "latest") {
-    activeList = activeList
-      .sort((a, b) => {
-        if (a.dueDate && b.dueDate) {
-          const formattedTaskDateA = getFormattedDate(a.dueDate);
-          const formattedTaskDateB = getFormattedDate(b.dueDate);
-          return new Date(formattedTaskDateB) - new Date(formattedTaskDateA);
-        }
-      })
-      .sort((a, b) => {
-        if (a.dueDate && !b.dueDate) {
-          return -1;
-        }
-      });
-  } else if (filter.toLowerCase() === "low") {
-    activeList = activeList.sort((a, b) => {
-      const priorityA = +a.priority;
-      const priorityB = +b.priority;
-      return priorityA - priorityB;
-    });
-  } else if (filter.toLowerCase() === "high") {
-    activeList = activeList.sort((a, b) => {
-      const priorityA = +a.priority;
-      const priorityB = +b.priority;
-      return priorityB - priorityA;
-    });
-  }
+  activeList = filterTasks(activeList);
 
   activeList.forEach((task) => {
     const createdTask = createTaskElement(task);
@@ -165,51 +112,7 @@ const renderTasks = (selectedList) => {
 
       let filterList = list.tasks;
 
-      if (filter.toLowerCase() === "recent") {
-        filterList = filterList
-          .sort((a, b) => {
-            if (a.dueDate && b.dueDate) {
-              const formattedTaskDateA = getFormattedDate(a.dueDate);
-              const formattedTaskDateB = getFormattedDate(b.dueDate);
-              return (
-                new Date(formattedTaskDateA) - new Date(formattedTaskDateB)
-              );
-            }
-          })
-          .sort((a, b) => {
-            if (a.dueDate && !b.dueDate) {
-              return -1;
-            }
-          });
-      } else if (filter.toLowerCase() === "latest") {
-        filterList = filterList
-          .sort((a, b) => {
-            if (a.dueDate && b.dueDate) {
-              const formattedTaskDateA = getFormattedDate(a.dueDate);
-              const formattedTaskDateB = getFormattedDate(b.dueDate);
-              return (
-                new Date(formattedTaskDateB) - new Date(formattedTaskDateA)
-              );
-            }
-          })
-          .sort((a, b) => {
-            if (a.dueDate && !b.dueDate) {
-              return -1;
-            }
-          });
-      } else if (filter.toLowerCase() === "low") {
-        filterList = filterList.sort((a, b) => {
-          const priorityA = +a.priority;
-          const priorityB = +b.priority;
-          return priorityA - priorityB;
-        });
-      } else if (filter.toLowerCase() === "high") {
-        filterList = filterList.sort((a, b) => {
-          const priorityA = +a.priority;
-          const priorityB = +b.priority;
-          return priorityB - priorityA;
-        });
-      }
+      filterList = filterTasks(filterList);
 
       if (filterList.length > 0) {
         filterList.forEach((task) => {
@@ -368,6 +271,52 @@ const createTaskElement = (task) => {
   });
 
   return taskElement;
+};
+
+const filterTasks = (list) => {
+  if (filter.toLowerCase() === "recent") {
+    list = list
+      .sort((a, b) => {
+        if (a.dueDate && b.dueDate) {
+          const formattedTaskDateA = getFormattedDate(a.dueDate);
+          const formattedTaskDateB = getFormattedDate(b.dueDate);
+          return new Date(formattedTaskDateA) - new Date(formattedTaskDateB);
+        }
+      })
+      .sort((a, b) => {
+        if (a.dueDate && !b.dueDate) {
+          return -1;
+        }
+      });
+  } else if (filter.toLowerCase() === "latest") {
+    list = list
+      .sort((a, b) => {
+        if (a.dueDate && b.dueDate) {
+          const formattedTaskDateA = getFormattedDate(a.dueDate);
+          const formattedTaskDateB = getFormattedDate(b.dueDate);
+          return new Date(formattedTaskDateB) - new Date(formattedTaskDateA);
+        }
+      })
+      .sort((a, b) => {
+        if (a.dueDate && !b.dueDate) {
+          return -1;
+        }
+      });
+  } else if (filter.toLowerCase() === "low") {
+    list = list.sort((a, b) => {
+      const priorityA = +a.priority;
+      const priorityB = +b.priority;
+      return priorityA - priorityB;
+    });
+  } else if (filter.toLowerCase() === "high") {
+    list = list.sort((a, b) => {
+      const priorityA = +a.priority;
+      const priorityB = +b.priority;
+      return priorityB - priorityA;
+    });
+  }
+
+  return list;
 };
 
 render();

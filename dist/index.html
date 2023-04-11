@@ -70,7 +70,7 @@
       <div class="logo">TaskApp</div>
     </header>
     <main>
-      <section id="sidebar" class="open" data-sidebar>
+      <section id="sidebar" data-sidebar>
         <form class="add-list-form" data-new-list-form>
           <input
             type="text"
@@ -85,7 +85,12 @@
           </button>
         </form>
         <ul class="all-tasks list-container" data-all-tasks>
-          <li class="default-task list-item" data-list-id="0" data-default-list>
+          <li
+            id="all-task-item"
+            class="default-task list-item"
+            data-list-id="0"
+            data-default-list
+          >
             All Tasks
           </li>
         </ul>
