@@ -39,11 +39,11 @@ export const createList = (name) => {
 };
 
 export const getPriority = (task) => {
-  if (task.priority === "low") {
+  if (task.priority === "0") {
     return "low";
-  } else if (task.priority === "medium") {
+  } else if (task.priority === "1") {
     return "medium";
-  } else if (task.priority === "high") {
+  } else if (task.priority === "2") {
     return "high";
   }
 };

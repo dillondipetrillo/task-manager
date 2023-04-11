@@ -104,33 +104,45 @@ const renderTasks = (selectedList) => {
     activeList = selectedList.tasks;
   }
 
-  if (filter.toLowerCase() === "day") {
-    activeList = activeList.filter((task) => {
-      if (task.dueDate) {
-        const formattedTaskDate = getFormattedDate(task.dueDate);
-        return isToday(new Date(formattedTaskDate));
-      }
+  if (filter.toLowerCase() === "recent") {
+    activeList = activeList
+      .sort((a, b) => {
+        if (a.dueDate && b.dueDate) {
+          const formattedTaskDateA = getFormattedDate(a.dueDate);
+          const formattedTaskDateB = getFormattedDate(b.dueDate);
+          return new Date(formattedTaskDateA) - new Date(formattedTaskDateB);
+        }
+      })
+      .sort((a, b) => {
+        if (a.dueDate && !b.dueDate) {
+          return -1;
+        }
+      });
+  } else if (filter.toLowerCase() === "latest") {
+    activeList = activeList
+      .sort((a, b) => {
+        if (a.dueDate && b.dueDate) {
+          const formattedTaskDateA = getFormattedDate(a.dueDate);
+          const formattedTaskDateB = getFormattedDate(b.dueDate);
+          return new Date(formattedTaskDateB) - new Date(formattedTaskDateA);
+        }
+      })
+      .sort((a, b) => {
+        if (a.dueDate && !b.dueDate) {
+          return -1;
+        }
+      });
+  } else if (filter.toLowerCase() === "low") {
+    activeList = activeList.sort((a, b) => {
+      const priorityA = +a.priority;
+      const priorityB = +b.priority;
+      return priorityA - priorityB;
     });
-  } else if (filter.toLowerCase() === "week") {
-    activeList = activeList.filter((task) => {
-      if (task.dueDate) {
-        const formattedTaskDate = getFormattedDate(task.dueDate);
-        return isSameWeek(new Date(formattedTaskDate), new Date());
-      }
-    });
-  } else if (filter.toLowerCase() === "month") {
-    activeList = activeList.filter((task) => {
-      if (task.dueDate) {
-        const formattedTaskDate = getFormattedDate(task.dueDate);
-        return isSameMonth(new Date(formattedTaskDate), new Date());
-      }
-    });
-  } else if (filter.toLowerCase() === "year") {
-    activeList = activeList.filter((task) => {
-      if (task.dueDate) {
-        const formattedTaskDate = getFormattedDate(task.dueDate);
-        return isSameYear(new Date(formattedTaskDate), new Date());
-      }
+  } else if (filter.toLowerCase() === "high") {
+    activeList = activeList.sort((a, b) => {
+      const priorityA = +a.priority;
+      const priorityB = +b.priority;
+      return priorityB - priorityA;
     });
   }
 
@@ -153,45 +165,63 @@ const renderTasks = (selectedList) => {
 
       let filterList = list.tasks;
 
-      if (filter.toLowerCase() === "day") {
-        filterList = filterList.filter((task) => {
-          if (task.dueDate) {
-            const formattedTaskDate = getFormattedDate(task.dueDate);
-            return isToday(new Date(formattedTaskDate));
-          }
+      if (filter.toLowerCase() === "recent") {
+        filterList = filterList
+          .sort((a, b) => {
+            if (a.dueDate && b.dueDate) {
+              const formattedTaskDateA = getFormattedDate(a.dueDate);
+              const formattedTaskDateB = getFormattedDate(b.dueDate);
+              return (
+                new Date(formattedTaskDateA) - new Date(formattedTaskDateB)
+              );
+            }
+          })
+          .sort((a, b) => {
+            if (a.dueDate && !b.dueDate) {
+              return -1;
+            }
+          });
+      } else if (filter.toLowerCase() === "latest") {
+        filterList = filterList
+          .sort((a, b) => {
+            if (a.dueDate && b.dueDate) {
+              const formattedTaskDateA = getFormattedDate(a.dueDate);
+              const formattedTaskDateB = getFormattedDate(b.dueDate);
+              return (
+                new Date(formattedTaskDateB) - new Date(formattedTaskDateA)
+              );
+            }
+          })
+          .sort((a, b) => {
+            if (a.dueDate && !b.dueDate) {
+              return -1;
+            }
+          });
+      } else if (filter.toLowerCase() === "low") {
+        filterList = filterList.sort((a, b) => {
+          const priorityA = +a.priority;
+          const priorityB = +b.priority;
+          return priorityA - priorityB;
         });
-      } else if (filter.toLowerCase() === "week") {
-        filterList = filterList.filter((task) => {
-          if (task.dueDate) {
-            const formattedTaskDate = getFormattedDate(task.dueDate);
-            return isSameWeek(new Date(formattedTaskDate), new Date());
-          }
-        });
-      } else if (filter.toLowerCase() === "month") {
-        filterList = filterList.filter((task) => {
-          if (task.dueDate) {
-            const formattedTaskDate = getFormattedDate(task.dueDate);
-            return isSameMonth(new Date(formattedTaskDate), new Date());
-          }
-        });
-      } else if (filter.toLowerCase() === "year") {
-        filterList = filterList.filter((task) => {
-          if (task.dueDate) {
-            const formattedTaskDate = getFormattedDate(task.dueDate);
-            return isSameYear(new Date(formattedTaskDate), new Date());
-          }
+      } else if (filter.toLowerCase() === "high") {
+        filterList = filterList.sort((a, b) => {
+          const priorityA = +a.priority;
+          const priorityB = +b.priority;
+          return priorityB - priorityA;
         });
       }
 
-      filterList.forEach((task) => {
-        const generatedTaskEl = createTaskElement(task);
-        otherListTaskContainer.appendChild(generatedTaskEl);
-      });
+      if (filterList.length > 0) {
+        filterList.forEach((task) => {
+          const generatedTaskEl = createTaskElement(task);
+          otherListTaskContainer.appendChild(generatedTaskEl);
+        });
 
-      otherListTitle.appendChild(otherListH2);
-      otherListContainer.appendChild(otherListTitle);
-      otherListContainer.appendChild(otherListTaskContainer);
-      otherLists.appendChild(otherListContainer);
+        otherListTitle.appendChild(otherListH2);
+        otherListContainer.appendChild(otherListTitle);
+        otherListContainer.appendChild(otherListTaskContainer);
+        otherLists.appendChild(otherListContainer);
+      }
     });
   }
 };
@@ -229,7 +259,9 @@ const deleteList = (e) => {
   lists = lists.filter((list) => list.id !== listParentId);
   const previousList = listParent.previousSibling;
   const nextList = listParent.nextSibling;
-  if (previousList != null) {
+  if (selectedListId == "0") {
+    selectedListId = 0;
+  } else if (previousList != null) {
     const previousListId = previousList.dataset.listId;
     selectedListId = previousListId;
   } else if (nextList != null) {

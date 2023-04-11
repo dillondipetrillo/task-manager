@@ -52,7 +52,7 @@ export const toggleAddTaskForm = () => {
 
       taskFormTitle.value = "";
       taskFormDueDate.value = "";
-      taskFormPriority.value = "low";
+      taskFormPriority.value = "0";
       taskFormDescription.value = "";
 
       closeForm();
