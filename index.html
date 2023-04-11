@@ -45,9 +45,9 @@
         <div class="form-row">
           <label for="priority">Priority</label>
           <select name="priority" id="priority" data-input-priority>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+            <option value="0">Low</option>
+            <option value="1">Medium</option>
+            <option value="2">High</option>
           </select>
         </div>
         <div class="form-row">
@@ -101,13 +101,12 @@
             </div>
           </div>
           <div class="content-filter-container">
-            <label for="filter">Filter By Due Date</label>
+            <label for="filter">Filter By</label>
             <select name="filter" id="filter" data-filter-tasks>
-              <option value="all">All</option>
-              <option value="day">Day</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
-              <option value="year">Year</option>
+              <option value="recent">Recent to Latest</option>
+              <option value="latest">Latest to Recent</option>
+              <option value="low">Low to High Priority</option>
+              <option value="high">High to Low Priority</option>
             </select>
           </div>
         </div>
